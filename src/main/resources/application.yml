@@ -1,0 +1,100 @@
+spring:
+  datasource:
+    druid:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://192.168.1.222:3306/campusShop?useUnicode=true&characterEncoding=utf8&rewriteBatchedStatements=true&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+      username: root
+      password: Admin@123456
+      # 连接池配置
+      initial-size: 5
+      min-idle: 5
+      max-active: 20
+      # 连接等待超时时间
+      max-wait: 30000
+      # 配置检测可以关闭的空闲连接间隔时间
+      time-between-eviction-runs-millis: 60000
+      # 配置连接在池中的最小生存时间
+      min-evictable-idle-time-millis: 300000
+      validation-query: select '1' from dual
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      # 打开PSCache，并且指定每个连接上PSCache的大小
+      pool-prepared-statements: true
+      max-open-prepared-statements: 20
+      max-pool-prepared-statement-per-connection-size: 20
+      # 配置监控统计拦截的filters, 去掉后监控界面sql无法统计, 'wall'用于防火墙
+      filters: stat,wall
+      # Spring监控AOP切入点，如x.y.z.service.*,配置多个英文逗号分隔
+      aop-patterns: com.springboot.servie.*
+      # WebStatFilter配置
+      web-stat-filter:
+        enabled: true
+        # 添加过滤规则
+        url-pattern: /*
+        # 忽略过滤的格式
+        exclusions: '*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*'
+
+      # StatViewServlet配置
+      stat-view-servlet:
+        enabled: true
+        # 访问路径为/druid时，跳转到StatViewServlet
+        url-pattern: /druid/*
+        # 是否能够重置数据
+        reset-enable: false
+        # 需要账号密码才能访问控制台
+        login-username: druid
+        login-password: druid123
+        # IP白名单
+        # allow: 127.0.0.1
+        #　IP黑名单（共同存在时，deny优先于allow）
+        # deny: 192.168.1.218
+
+      # 配置StatFilter
+      filter:
+        stat:
+          log-slow-sql: true
+  devtools:
+    restart:
+      # 设置开启热部署
+      enabled: true
+  # 模板配置
+  thymeleaf:
+    # 这个开发配置为false，避免改了模板还要重启服务器
+    cache: false
+    suffix: .html
+    encoding: UTF-8
+    mode: HTML
+    servlet:
+      content-type: text/html
+  servlet:
+    multipart:
+      # 是否支持批量上传   (默认值 true)
+      enabled: true
+      resolve-lazily: false
+# 开启日志
+debug: true
+# 日志记录级别
+logging:
+  level:
+    # root日志以WARN级别输出
+    root: warn
+    cn:
+      fanchencloud:
+        campus: debug
+    # 去掉 CONDITIONS EVALUATION REPORT
+    org:
+      springframework:
+        boot:
+          autoconfigure: error
+  config: classpath:log4j2.xml
+# MyBatis 配置
+mybatis:
+  # mapper映射文件
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: cn.fanchencloud.campus.entity
+  configuration:
+    map-underscore-to-camel-case: true
+    use-generated-keys: true
+    default-fetch-size: 100
+    default-statement-timeout: 30

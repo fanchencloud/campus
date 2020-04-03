@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta charset="utf-8"/>
+    <title>商品分类管理</title>
+
+    <!-- head 中 -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/weui/1.1.3/style/weui.min.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/jquery-weui/1.2.1/css/jquery-weui.min.css">
+    <style type="text/css">
+        .weui-swiped-btn_primary {
+            background-color: #1aad19;
+        }
+    </style>
+</head>
+<body>
+<header class="demos-header">
+    <h1 class="demos-title" style="text-align: center">商品分类管理</h1>
+</header>
+<!--<div style="margin-top: 0.3rem;">-->
+<!--<div style="float: left;margin-left: 0.5rem;">你好，<span id="username">admin</span></div>-->
+<!--<div style="float: right;margin-right: 0.3rem">-->
+<!--<a href="javascript: addShop()" class="weui-btn weui-btn_mini weui-btn_default">添加店铺</a>-->
+<!--</div>-->
+<!--<div style="clear:both;"></div>-->
+<!--</div>-->
+<div class="weui-cells">
+    <div class="weui-cell">
+        <div class="weui-cell__bd">
+            <p>商品类别</p>
+        </div>
+        <div class="weui-cell__ft">优先级</div>
+    </div>
+</div>
+<div class="weui-cells" id="productCategoryContainer">
+</div>
+<div class="weui-footer weui-footer_fixed-bottom" style="margin-bottom: 0.2rem;">
+    <div class="weui-flex">
+        <div class="weui-flex__item">
+            <a href="/shop/listShop" style="color: #ffffff;"
+               class="weui-btn weui-btn_primary">返回</a>
+        </div>
+        <div style="width: 0.4rem;"></div>
+        <div class="weui-flex__item">
+            <a href="javascript:addProductCategory();" style="color: #ffffff;"
+               class="weui-btn weui-btn_primary">添加类别</a>
+        </div>
+    </div>
+</div>
+
+<!-- 退出系统  修改密码 -->
+</body>
+<!-- body 最后 -->
+<script src="https://cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery-weui/1.2.1/js/jquery-weui.min.js"></script>
+</html>
+<script type="text/javascript" src="/js/shop/shopProductList.js"></script>

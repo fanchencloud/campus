@@ -1,0 +1,22 @@
+# 过滤所有编译后的class文件
+*.class
+
+# 过滤所有编译后的日志文件
+*.log
+
+HELP.md
+# 过滤target 目录下的所有文件
+target/
+!**/src/main/**
+!**/src/test/**
+
+### IntelliJ IDEA ###
+.idea/
+*.iws
+*.iml
+*.ipr
+
+# 过滤一些文件夹
+.mvn/
+mvnw
+mvnw.cmd

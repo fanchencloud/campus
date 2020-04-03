@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta charset="utf-8"/>
+    <title>店铺列表</title>
+
+    <!-- head 中 -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/weui/1.1.3/style/weui.min.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/jquery-weui/1.2.1/css/jquery-weui.min.css">
+</head>
+<body>
+<header class="demos-header">
+    <h1 class="demos-title" style="text-align: center">店铺列表</h1>
+</header>
+<div style="margin-top: 0.3rem;">
+    <div style="float: left;margin-left: 0.5rem;">你好，<span id="username">admin</span></div>
+    <div style="float: right;margin-right: 0.3rem">
+        <a href="javascript: addShop()" class="weui-btn weui-btn_mini weui-btn_default">添加店铺</a>
+    </div>
+    <div style="clear:both;"></div>
+</div>
+<div class="weui-cells">
+    <div class="weui-cell">
+        <div class="weui-cell__bd">
+            <p>店铺名称</p>
+        </div>
+        <div class="weui-cell__ft">状态</div>
+    </div>
+</div>
+<div class="weui-cells" id="shopListContainer">
+</div>
+<!-- 退出系统  修改密码 -->
+</body>
+<!-- body 最后 -->
+<script src="https://cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery-weui/1.2.1/js/jquery-weui.min.js"></script>
+</html>
+<script type="text/javascript" src="/js/shop/shop.js"></script>

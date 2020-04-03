@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta charset="utf-8"/>
+    <title>修改用户信息</title>
+    <!-- head 中 -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/weui/1.1.3/style/weui.min.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/jquery-weui/1.2.1/css/jquery-weui.min.css">
+    <link rel="stylesheet" href="/css/common.css">
+</head>
+<body>
+<header class="demos-header">
+    <h1 class="demos-title title-text-center">修改用户信息</h1>
+</header>
+<div class="weui-gallery" id="gallery">
+    <span class="weui-gallery__img" id="gallerySpan"></span>
+    <div class="weui-gallery__opr">
+        <a href="javascript:" id="galleryHref" class="weui-gallery__del">
+            <i class="weui-icon-delete weui-icon_gallery-delete"></i>
+        </a>
+    </div>
+</div>
+<div class="content">
+    <div class="weui-cells weui-cells_form">
+        <!-- Text inputs -->
+        <!--<div class="weui-cell">-->
+        <div class="weui-cell">
+            <div class="weui-cell__hd"><label class="weui-label">用户昵称</label></div>
+            <div class="weui-cell__bd">
+                <label for="nickname"></label>
+                <input class="weui-input" type="text" id="nickname" placeholder="请输入用户昵称" required>
+            </div>
+        </div>
+        <!--</div>-->
+        <!-- 性别 下拉列表 -->
+        <div class="weui-cell weui-cell_select weui-cell_select-after">
+            <div class="weui-cell__hd">
+                <label for="sex" class="weui-label">性别</label>
+            </div>
+            <div class="weui-cell__bd">
+                <select class="weui-select" id="sex">
+                    <option value="男">男</option>
+                    <option value="女">女</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- 电话 text -->
+        <div class="weui-cell">
+            <div class="weui-cell__hd"><label class="weui-label">电话</label></div>
+            <div class="weui-cell__bd">
+                <label for="phone"></label>
+                <input class="weui-input" type="tel" id="phone" placeholder="请输入电话">
+            </div>
+        </div>
+        <!-- 邮箱 text -->
+        <div class="weui-cell">
+            <div class="weui-cell__hd"><label class="weui-label">邮箱</label></div>
+            <div class="weui-cell__bd">
+                <label for="mailbox"></label>
+                <input class="weui-input" type="email" id="mailbox" placeholder="请输入邮箱" required>
+            </div>
+        </div>
+
+        <!-- 用户头像   上传控件 -->
+        <div class="weui-cell">
+            <div class="weui-cell__bd">
+                <div class="weui-uploader">
+                    <div class="weui-uploader__hd">
+                        <p class="weui-uploader__title">用户头像</p>
+                        <div class="weui-uploader__info" id="userImageSize">0/1</div>
+                    </div>
+                    <div class="weui-uploader__bd">
+                        <ul class="weui-uploader__files" id="uploadUserImage">
+                        </ul>
+                        <div class="weui-uploader__input-box">
+                            <input id="uploadUserImageButton" class="weui-uploader__input" type="button"
+                                   onclick="uploadUserImage()">
+                        </div>
+                        <input id="uploadUserImageInput" hidden class="weui-uploader__input"
+                               type="file" accept="image/*">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 验证码    -->
+        <div class="weui-cell weui-cell_vcode">
+            <div class="weui-cell__hd"><label class="weui-label">验证码</label></div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" id="verifyCode" type="text" placeholder="请输入验证码" required>
+            </div>
+            <div class="weui-cell__ft">
+                <img class="weui-vcode-img" src="/Kaptcha.jpg" alt="图片验证码" onclick="changeCode(this)">
+            </div>
+        </div>
+    </div>
+    <div class="weui-flex">
+        <div class="weui-flex__item">
+            <div class="weui-btn-area">
+                <a class="weui-btn weui-btn_default" href="/home" id="showTooltips">取消修改</a>
+            </div>
+        </div>
+        <div class="weui-flex__item">
+            <div class="weui-btn-area">
+                <a class="weui-btn weui-btn_primary"
+                   href="javascript:" onclick="submitFunction()" id="registerShopSubmit">确认修改</a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<!-- body 最后 -->
+<script src="https://cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery-weui/1.2.1/js/jquery-weui.min.js"></script>
+</html>
+<script type="text/javascript" src="/js/user/modifyUserInfo.js"></script>
+<script type="text/javascript" src="/js/common.js"></script>
+<script type="text/javascript">
+    let fileDom = document.getElementById("uploadUserImageInput");
+    fileDom.addEventListener("change", uploadUserImageInput, false);
+</script>

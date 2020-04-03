@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta charset="utf-8"/>
+    <title>商店页面</title>
+    <!-- head 中 -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/weui/1.1.3/style/weui.min.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/jquery-weui/1.2.1/css/jquery-weui.min.css">
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/shopDetail.css">
+
+</head>
+<body>
+<header class="demos-header">
+    <h3 class="demos-title title-text-center">商店详情</h3>
+</header>
+
+<div class="card demo-card-header-pic">
+    <div align="bottom" class="card-header color-white no-border no-padding">
+        <img id="shopImage" class='card-cover' alt="" src="">
+    </div>
+    <div class="card-content">
+        <div class="card-content-inner">
+            <p class="color-gray" id="shopLastEditTime"></p>
+            <p id="shopDescription"></p>
+        </div>
+    </div>
+    <div class="card-footer">
+        <div class="link" id="shopAddress"></div>
+        <div class="link" id="shopPhone"></div>
+    </div>
+</div>
+
+<!-- 搜索框 -->
+<div class="weui-search-bar" id="searchBar">
+    <div class="weui-search-bar__form">
+        <div class="weui-search-bar__box">
+            <i class="weui-icon-search"></i>
+            <label for="searchInput"></label>
+            <input type="search" class="weui-search-bar__input" id="searchInput"
+                   placeholder="搜索" required="">
+            <a href="javascript:" class="weui-icon-clear" id="searchClear"></a>
+        </div>
+        <label class="weui-search-bar__label" id="searchText">
+            <i class="weui-icon-search"></i>
+            <span>搜索</span>
+        </label>
+    </div>
+    <a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel">取消</a>
+</div>
+<div id="ProductCategoryListContainer">
+
+</div>
+
+
+<div id="productListContainer">
+</div>
+<div class="weui-loadmore" id="loadAnimation" style="visibility: hidden;">
+    <i class="weui-loading"></i>
+    <span class="weui-loadmore__tips">正在加载</span>
+</div>
+<div class="weui-loadmore weui-loadmore_line" id="allIsLoad" style="visibility: hidden;">
+    <span class="weui-loadmore__tips">到底了 </span>
+</div>
+<div class="weui-loadmore weui-loadmore_line" id="no-data" style="visibility: hidden;">
+    <span class="weui-loadmore__tips">暂无数据</span>
+</div>
+<!-- body 最后 -->
+<script src="https://cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery-weui/1.2.1/js/jquery-weui.min.js"></script>
+<script type="text/javascript" src="/js/common.js"></script>
+<script type="text/javascript" src="/js/shop/shopDetail.js"></script>
+</body>
+</html>

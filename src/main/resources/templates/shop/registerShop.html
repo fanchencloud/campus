@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta charset="utf-8"/>
+    <title>店铺注册</title>
+
+    <!-- head 中 -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/weui/1.1.3/style/weui.min.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/jquery-weui/1.2.1/css/jquery-weui.min.css">
+</head>
+<body>
+<header class="demos-header">
+    <h1 class="demos-title">店铺注册</h1>
+</header>
+<div class="content">
+    <div class="weui-cells weui-cells_form">
+        <!-- Text inputs -->
+        <!--<div class="weui-cell">-->
+        <div class="weui-cell">
+            <div class="weui-cell__hd"><label class="weui-label">商铺名称</label></div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" type="text" id="shopName" placeholder="请输入商铺名称">
+            </div>
+        </div>
+        <!--</div>-->
+        <!-- 商铺分类 下拉列表 -->
+        <div class="weui-cell weui-cell_select weui-cell_select-after">
+            <div class="weui-cell__hd">
+                <label for="shopCategory" class="weui-label">店铺分类</label>
+            </div>
+            <div class="weui-cell__bd">
+                <select class="weui-select" id="shopCategory">
+                </select>
+            </div>
+        </div>
+        <!-- 区域列表 下列表 -->
+        <div class="weui-cell weui-cell_select weui-cell_select-after">
+            <div class="weui-cell__hd">
+                <label for="area" class="weui-label">所属区域</label>
+            </div>
+            <div class="weui-cell__bd">
+                <select class="weui-select" id="area">
+                </select>
+            </div>
+        </div>
+
+        <!-- 详细地址 text -->
+        <div class="weui-cell">
+            <div class="weui-cell__hd"><label class="weui-label">详细地址</label></div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" type="text" id="shopAddress" placeholder="请输入商铺详细地址">
+            </div>
+        </div>
+        <!-- 联系电话 phone -->
+        <div class="weui-cell">
+            <div class="weui-cell__hd">
+                <label class="weui-label">店铺联系方式</label>
+            </div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" type="tel"
+                       onKeypress="return (/[\d]/.test(String.fromCharCode(event.keyCode)))" id="phone"
+                       placeholder="请输入手机号">
+            </div>
+        </div>
+        <!-- 缩略图   上传控件 -->
+        <div class="weui-cell">
+            <div class="weui-cell__hd"><label class="weui-label">商铺显示缩略图</label></div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" type="file" id="shopImage">
+            </div>
+        </div>
+
+        <!-- 店铺简介  textarea -->
+        <div class="weui-cells__title">店铺简介</div>
+        <div class="weui-cells weui-cells_form">
+            <div class="weui-cell">
+                <div class="weui-cell__bd">
+                    <textarea class="weui-textarea" id="shopDescription" placeholder="请输入店铺简介" rows="3"></textarea>
+                    <!--<div class="weui-textarea-counter"><span>0</span>/200</div>-->
+                </div>
+            </div>
+        </div>
+        <!-- 验证码    -->
+        <div class="weui-cell weui-cell_vcode">
+            <div class="weui-cell__hd"><label class="weui-label">验证码</label></div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" id="verifyCode" type="text" placeholder="请输入验证码">
+            </div>
+            <div class="weui-cell__ft">
+                <img class="weui-vcode-img" src="/Kaptcha.jpg" alt="图片验证码" onclick="changeCode(this)">
+            </div>
+        </div>
+    </div>
+    <div class="weui-flex">
+        <div class="weui-flex__item">
+            <div class="weui-btn-area">
+                <a class="weui-btn weui-btn_default" href="/shop/listShop" id="showTooltips">返回</a>
+            </div>
+        </div>
+        <div class="weui-flex__item">
+            <div class="weui-btn-area">
+                <a class="weui-btn weui-btn_primary"
+                   href="javascript:" onclick="addShopSubmit()" id="registerShopSubmit">提交</a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<!-- body 最后 -->
+<script src="https://cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery-weui/1.2.1/js/jquery-weui.min.js"></script>
+</html>
+<script type="text/javascript" src="/js/shop/registerShop.js"></script>

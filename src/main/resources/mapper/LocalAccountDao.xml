@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.fanchencloud.campus.mapper.LocalAccountMapper">
+    <insert id="addLocalAccount" useGeneratedKeys="true" keyProperty="id" keyColumn="id"
+            parameterType="cn.fanchencloud.campus.entity.LocalAccount">
+        insert into local_account(user_id, username, password, create_time, last_edit_time)
+        VALUES (#{userId}, #{username}, #{password}, #{createTime}, #{lastEditTime});
+    </insert>
+    <update id="updateLocalAccount">
+        update local_account
+        <set>
+            <if test="password != null ">password = #{password},</if>
+            <if test="lastEditTime != null ">last_edit_time = #{lastEditTime},</if>
+        </set>
+        where id = #{id};
+    </update>
+    <select id="getRecordByUsernameAndPassword" resultType="cn.fanchencloud.campus.entity.LocalAccount">
+        select id, user_id, username, password
+        from local_account
+        where username = #{username}
+          and password = #{password}
+        limit 1;
+    </select>
+    <select id="isExist" resultType="java.lang.Boolean">
+        select count(*)
+        from local_account
+        where username = #{username}
+    </select>
+    <select id="getRecordByUsername" resultType="cn.fanchencloud.campus.entity.LocalAccount">
+        select id, user_id, username
+        from local_account
+        where username = #{username}
+        limit 1;
+    </select>
+</mapper>

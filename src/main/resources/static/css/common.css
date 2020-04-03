@@ -1,0 +1,10 @@
+@charset "UTF-8";
+
+.title-text-center {
+    text-align: center;
+    font-weight: bolder;
+}
+
+a, a:hover, a:visited, a:link {
+    text-decoration: none;
+}

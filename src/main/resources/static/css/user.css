@@ -1,0 +1,25 @@
+.userInfoHead {
+    background-color: burlywood;
+    /*height: 100px;*/
+}
+
+.userHeadImage {
+    text-align: center;
+}
+
+.userHeadImage img {
+    width: 60px;
+    height: 60px;
+    margin-top: 0.6rem;
+    border-radius: 33px;
+    border: 2px solid #fff;
+}
+
+.userInfoName {
+    text-align: center;
+    color: #ffffff;
+}
+
+.signOut {
+    margin-top: 3rem;
+}

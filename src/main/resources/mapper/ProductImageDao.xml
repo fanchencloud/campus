@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.fanchencloud.campus.mapper.ProductImageMapper">
+    <insert id="bulkInsertProductImage" parameterType="java.util.List">
+        insert into product_img (img_path, img_desc, priority, create_time, product_id,uuid)
+        VALUES
+        <foreach collection="list" item="productImage" index="index" separator=",">
+            (
+            #{productImage.imgPath},#{productImage.imgDesc},#{productImage.priority},
+            #{productImage.createTime},#{productImage.productId},#{productImage.uuid}
+            )
+        </foreach>
+    </insert>
+    <delete id="deleteProductImageByProductId">
+        delete
+        from product_img
+        where product_id = #{productId};
+    </delete>
+    <delete id="deleteProductImageByProductImageId">
+        delete
+        from product_img
+        where product_img_id = #{productImgId};
+    </delete>
+    <delete id="deleteProductImageByUUId">
+        delete
+        from product_img
+        where uuid = #{uuid}
+    </delete>
+    <select id="queryProductImageByProductId" resultType="cn.fanchencloud.campus.entity.ProductImage">
+        select product_img_id, img_path, img_desc, priority, create_time, product_id
+        from product_img
+        where product_id = #{productId};
+    </select>
+    <select id="queryProductImageByUUID" resultType="cn.fanchencloud.campus.entity.ProductImage">
+        select product_img_id, img_path, img_desc, priority, create_time, product_id, uuid
+        from product_img
+        where uuid = #{uuid};
+    </select>
+    <select id="queryProductImageList" resultType="java.lang.String">
+        select uuid
+        from product_img
+        where product_id = #{productId};
+    </select>
+</mapper>

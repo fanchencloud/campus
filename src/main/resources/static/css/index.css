@@ -1,0 +1,51 @@
+@charset "UTF-8";
+
+a {
+    color: blue;
+}
+
+.mobileClick {
+    cursor: pointer;
+}
+
+.center {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    -moz-transform: translateX(-50%) translateY(-50%);
+    -ms-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+}
+
+.otherLogin {
+    margin-top: 0.6rem;
+    text-align: center;
+}
+
+.userInfoHead {
+    background-color: burlywood;
+    /*height: 100px;*/
+}
+
+.userHeadImage {
+    text-align: center;
+}
+
+.userHeadImage img {
+    width: 60px;
+    height: 60px;
+    margin-top: 0.6rem;
+    border-radius: 33px;
+    border: 2px solid #fff;
+}
+
+.userInfoName {
+    text-align: center;
+    color: #ffffff;
+}
+
+.signOut {
+    margin-top: 3rem;
+}

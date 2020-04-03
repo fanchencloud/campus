@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.fanchencloud.campus.mapper.ProductCategoryMapper">
+    <insert id="addProductCategory">
+        insert into product_category
+        (product_category_name, product_category_description,
+         priority, create_time, last_edit_time, shop_id)
+        VALUES (#{productCategoryName}, #{productCategoryDescription},
+                #{priority}, #{createTime}, #{lastEditTime}, #{shopId});
+    </insert>
+    <update id="modifyProductCategory">
+        update product_category
+        <set>
+            <if test="productCategoryName != null ">product_category_name = #{productCategoryName},</if>
+            <if test="productCategoryDescription != null ">product_category_description =
+                #{productCategoryDescription},
+            </if>
+            <if test="priority != null ">priority = #{priority},</if>
+            <if test="lastEditTime != null ">last_edit_time = #{lastEditTime}</if>
+        </set>
+        where product_category_id = #{productCategoryId};
+    </update>
+    <delete id="deleteProductCategory">
+        delete
+        from product_category
+        where product_category_id = #{productCategoryId}
+    </delete>
+
+    <select id="queryProductCategoryListByShopId" resultType="cn.fanchencloud.campus.entity.ProductCategory">
+        select product_category_id,
+               product_category_name,
+               product_category_description,
+               priority,
+               shop_id
+        from product_category
+        where shop_id = #{shopId}
+        order by priority desc;
+    </select>
+    <select id="queryProductCategoryByProductCategoryId" resultType="cn.fanchencloud.campus.entity.ProductCategory">
+        select product_category_id,
+               product_category_name,
+               product_category_description,
+               priority,
+               shop_id
+        from product_category
+        where product_category_id = #{productCategoryId};
+    </select>
+</mapper>

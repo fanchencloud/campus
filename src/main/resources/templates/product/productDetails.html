@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta charset="utf-8"/>
+    <title id="productTitle"></title>
+    <!-- head 中 -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/weui/1.1.3/style/weui.min.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/jquery-weui/1.2.1/css/jquery-weui.min.css">
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/shopDetail.css">
+
+</head>
+<body>
+<header class="demos-header">
+    <h3 class="demos-title title-text-center">商品详情</h3>
+</header>
+
+<!-- 商品缩略图 -->
+<div class="card demo-card-header-pic">
+    <div align="bottom" class="card-header color-white no-border no-padding">
+        <img id="productImage" class='card-cover' alt="" src="">
+    </div>
+    <!--    <div class="card-content">-->
+    <!--        <div class="card-content-inner">-->
+    <!--            <p class="color-gray" id="shopLastEditTime"></p>-->
+    <!--            <p id="shopDescription"></p>-->
+    <!--        </div>-->
+    <!--    </div>-->
+    <div class="card-footer">
+        <div class="link" id="originalPrice"></div>
+        <div class="link" id="discountPrice"></div>
+    </div>
+</div>
+<!-- 商品介绍 -->
+<div class="weui-panel__bd">
+    <div class="weui-media-box weui-media-box_text">
+        <h4 class="weui-media-box__title">商品介绍</h4>
+        <p class="myProductDescription" id="productDescription">由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状，有自己的运行轨道。</p>
+    </div>
+</div>
+<div class="weui-panel weui-panel_access">
+    <div class="weui-panel__hd">商品详情图</div>
+</div>
+<div id="ProductImageContainer">
+
+</div>
+
+
+<div id="productListContainer">
+</div>
+<div class="weui-loadmore" id="loadAnimation" style="visibility: hidden;">
+    <i class="weui-loading"></i>
+    <span class="weui-loadmore__tips">正在加载</span>
+</div>
+<div class="weui-loadmore weui-loadmore_line" id="allIsLoad" style="visibility: hidden;">
+    <span class="weui-loadmore__tips">到底了 </span>
+</div>
+<div class="weui-loadmore weui-loadmore_line" id="no-data" style="visibility: hidden;">
+    <span class="weui-loadmore__tips">暂无数据</span>
+</div>
+<!-- body 最后 -->
+<script src="https://cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery-weui/1.2.1/js/jquery-weui.min.js"></script>
+<script type="text/javascript" src="/js/common.js"></script>
+<script type="text/javascript" src="/js/product/productDetail.js"></script>
+</body>
+</html>
