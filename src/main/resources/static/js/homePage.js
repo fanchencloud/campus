@@ -1,3 +1,6 @@
+// 用户类别
+let userType = 0;
+
 const registerHtml = '<div class="center" id="registerBox">\n' +
     '                <header class="demos-header">\n' +
     '                    <h1 class="demos-title title-text-center">注册</h1>\n' +
@@ -148,7 +151,7 @@ const userInfoHtml = '<header class="demos-header">\n' +
     '    </div>\n' +
     '</div>\n' +
     '<div class="weui-cells">\n' +
-    '    <a class="weui-cell weui-cell_access" href="javascript:;" onclick="myOperating()">\n' +
+    '    <a class="weui-cell weui-cell_access" href="javascript:;" onclick="startMyOperating()">\n' +
     '        <div class="weui-cell__bd">\n' +
     '            <p>操作</p>\n' +
     '        </div>\n' +
@@ -316,6 +319,8 @@ const initUserMessage = function () {
             $("#userInfoEmail").html(user.email);
             let $userInfoImage = $("#userInfoImage");
             let src = $userInfoImage[0].src;
+            // 修改用户类型
+            userType = user.userType;
             console.log("原始路径：" + src);
             $userInfoImage.attr('src', "/user/getUserImage");
             src = $userInfoImage[0].src;
@@ -451,7 +456,42 @@ const registerFunction = function () {
     });
 };
 
-const myOperating = function () {
+/**
+ * 展示当前用户可以进行的操作
+ */
+const startMyOperating = function () {
+    // 当前用户是普通用户
+    if (userType === 1) {
+        myOperatingOfUser();
+    } else if (userType === 2) {
+        /*  当前用户是商家  */
+        myOperatingOfBusiness();
+    }
+};
+
+/**
+ * 普通用户可以进行的操作
+ */
+const myOperatingOfUser = function () {
+    $.actions({
+        actions: [{
+            text: "修改我的信息",
+            onClick: function () {
+                window.location.href = "/person/modifyUser"
+            }
+        }, {
+            text: "修改登录密码",
+            onClick: function () {
+                window.location.href = "/user/modifyPassword"
+            }
+        }]
+    });
+};
+
+/**
+ * 商家用户可以进行的操作
+ */
+const myOperatingOfBusiness = function () {
     $.actions({
         actions: [{
             text: "修改我的信息",

@@ -63,8 +63,8 @@ public class ShopServiceImpl implements ShopService {
             throw new ShopOperationException("店铺信息不能为空");
         }
         // 1、向数据库中添加店铺信息，在添加之前，将店铺信息的状态设置为 审核中
+        shop.setEnableStatus(0);
         //     设置店铺创建时间，设置最后修改时间
-        shop.setEnableStatus(1);
         shop.setCreateTime(new Date());
         shop.setLastEditTime(shop.getCreateTime());
         InputStream shopImage = fileContainer.getFileInputStream();

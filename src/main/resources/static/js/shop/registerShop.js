@@ -1,8 +1,8 @@
 // 在页面加载完成执行函数
 $(function () {
-    console.log("页面加载完成自动执行！");
+    console.log("注册店铺页面加载完成自动执行！");
     $.get(baseRequestUrl + "/getRegisterShopInfo", function (response) {
-        console.log("成功接收到来自服务器数据");
+        console.log("成功接收到来自服务器的数据");
         if (response.status === 200) {
             const shopCategoryList = response.data.shopCategoryList;
             const areaList = response.data.areaList;
@@ -50,6 +50,9 @@ const postRequest = function (postUrl, postData, checkButton, callbackAddress) {
                     }
                     window.location.href = callbackAddress;
                     removeDisable(checkButton);
+                } else {
+                    console.log("请求失败！");
+                    $.toast(response.msg, "forbidden");
                 }
             });
         },
@@ -147,8 +150,8 @@ var addShopSubmit = function () {
         var shopImg = document.getElementById("shopImage").files[0];
         var formData = new FormData();
         formData.append("shopImg", shopImg);
-        formData.append("shop", JSON.stringify(shop));
-        formData.append("verifyCode", verifyCode);
+        formData.append("shopMessage", JSON.stringify(shop));
+        formData.append("verificationCode", verifyCode);
         console.log(shop);
         postRequest("/shop/registerShop", formData, checkButton, "/shop/listShop");
     }

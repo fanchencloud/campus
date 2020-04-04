@@ -6,7 +6,7 @@ $(function () {
     console.log("页面加载完成自动执行！");
     // 获取店铺列表
     $.get(baseRequestUrl + "/getShopList", function (response) {
-        console.log("成功接收到来自服务器数据");
+        console.log("成功接收到来自服务器的商铺列表数据");
         if (response.status === 200) {
             console.log(response);
             const username = response.data.user;
@@ -29,6 +29,14 @@ $(function () {
             $('#shopListContainer').append(shopHtml);
         } else {
             alert("后台数据错误！请联系管理员！");
+        }
+    });
+    // 获取用户信息
+    $.get("/user/getUserInfo", function (response) {
+        if (response.status === 200) {
+            let user = response.data;
+            console.log(user);
+            $("#username").html(user.name);
         }
     });
 });

@@ -126,7 +126,6 @@ public class AccountController {
         }
         PersonInfo personInfo = personInfoService.getPersonInfo(user.getUserId());
         personInfo.setEnableStatus(null);
-        personInfo.setUserType(null);
         return JsonResponse.ok(personInfo);
     }
 

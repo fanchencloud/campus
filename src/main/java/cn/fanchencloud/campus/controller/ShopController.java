@@ -1,5 +1,6 @@
 package cn.fanchencloud.campus.controller;
 
+import cn.fanchencloud.campus.util.CommonStrings;
 import com.alibaba.fastjson.JSON;
 import cn.fanchencloud.campus.entity.*;
 import cn.fanchencloud.campus.model.FileContainer;
@@ -18,10 +19,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -166,7 +165,11 @@ public class ShopController {
     @ResponseBody
     public JsonResponse getShopList(HttpServletRequest request) {
         LocalAccount user = (LocalAccount) request.getSession().getAttribute("user");
+        if (user == null) {
+            return JsonResponse.errorMsg("后台数据错误！不存在用户！");
+        }
         int userId = user.getUserId();
+
         List<Shop> shopList = shopService.getShopList(userId);
         Map<String, Object> map = new HashMap<>(2);
         map.put("shopList", shopList);
@@ -238,31 +241,51 @@ public class ShopController {
     }
 
     /**
-     * 注册一家店铺
+     * 注册一家店铺，接收并转化相应的参数，包括店铺信息以及图片信息
      *
-     * @param request http 请求
+     * @param request          http 请求
+     * @param shopImg          商铺的图片
+     * @param shopMessage      商铺的注册信息
+     * @param verificationCode 验证码
      * @return 注册结果
      */
     @PostMapping("/registerShop")
     @ResponseBody
-    public JsonResponse registerShop(HttpServletRequest request) throws UnsupportedEncodingException {
-        // 接收并转化相应的参数，包括店铺信息以及图片信息
-        Map<String, Object> map = doUploadMessage(request, true);
-        if (map.get(ERROR) != null) {
-            return (JsonResponse) map.get(ERROR);
+    public JsonResponse registerShop(HttpServletRequest request,
+                                     @RequestParam("shopMessage") String shopMessage,
+                                     @RequestParam("verificationCode") String verificationCode,
+                                     @RequestParam(value = "shopImg", required = false) MultipartFile shopImg) throws UnsupportedEncodingException {
+        if (StringUtils.isBlank(shopMessage)) {
+            return JsonResponse.errorMsg("注册的店铺信息不能为空");
+        }
+        if (StringUtils.isBlank(verificationCode)) {
+            return JsonResponse.errorMsg("验证码不能为空");
+        } else {
+            String cacheCode = (String) request.getSession().getAttribute(CommonStrings.VALIDATE_CODE);
+            // 验证码错误
+            if (!(cacheCode.toLowerCase().equals(verificationCode.toLowerCase()))) {
+                return JsonResponse.errorMsg("验证码错误！");
+            }
+        }
+        if (shopImg == null) {
+            return JsonResponse.errorMsg("注册的店铺的图片不能为空");
         }
         // 店铺信息
-        Shop shop = (Shop) map.get("shop");
+        Shop shop = JSON.parseObject(shopMessage, Shop.class);
+        // 封装上传的商铺图片
+        FileContainer fileContainer = new FileContainer();
         // 上传的文件流
-        InputStream uploadFile = (InputStream) map.get("uploadFile");
+        try {
+            fileContainer.setFileInputStream(shopImg.getInputStream());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         // 上传文件的文件名
-        String filename = (String) map.get("filename");
+        fileContainer.setFileName(shopImg.getOriginalFilename());
         // 设置店主
         LocalAccount user = (LocalAccount) request.getSession().getAttribute("user");
-        shop.setOwnerId(user.getId());
-        FileContainer fileContainer = new FileContainer();
-        fileContainer.setFileInputStream(uploadFile);
-        fileContainer.setFileName(filename);
+        shop.setOwnerId(user.getUserId());
         if (shopService.addShop(shop, fileContainer)) {
             return JsonResponse.ok("组成成功，请等待管理员审核！");
         } else {
