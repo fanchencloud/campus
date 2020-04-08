@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title> - FooTable</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link href="/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="/css/plugins/footable/footable.core.css" rel="stylesheet">
+
+    <link href="/css/animate.css" rel="stylesheet">
+    <link href="/css/style.css?v=4.1.0" rel="stylesheet">
+
+</head>
+
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content">
+                    <table class="footable table table-stripped toggle-arrow-tiny" data-page-size="10">
+                        <thead>
+                        <tr>
+                            <th data-toggle="true">店名</th>
+                            <th>电话</th>
+                            <th>商铺状态</th>
+                            <th data-hide="all" style="width: fit-content">商店描述</th>
+                            <th data-hide="all">地址</th>
+                            <th data-hide="all">商铺照片</th>
+                            <th data-hide="all">申请日期</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="shop:${shopList}">
+                            <td th:text="${shop.shopName}"></td>
+                            <td th:text="${shop.phone}"></td>
+                            <td th:switch="${shop.enableStatus}" th:id="'shopStatus_' + ${shop.shopId} ">
+                                <span th:case="0">审核中</span>
+                                <span th:case="1">审核通过</span>
+                                <span th:case="-1">审核未通过</span>
+                            </td>
+                            <!-- 店铺描述 -->
+                            <td th:text="${shop.shopDescription}"></td>
+                            <!-- 地址 -->
+                            <td th:text="${shop.shopAddress}"></td>
+                            <td>
+                                <a th:href="@{/shop/getShopImage(shopId=${shop.shopId})}"
+                                   target="_Blank">查看商店的照片</a>
+                            </td>
+                            <td th:text="${#dates.format(shop.createTime, 'yyyy-MM-dd HH:mm')}"></td>
+                            <td>
+                                <button class="btn btn-outline btn-primary dim" type="button" id="examinationPassedButton"
+                                        th:onclick="'examinationPassed(' + ${shop.shopId} + ')'">
+                                    <i class="fa fa-check"></i>
+                                </button>
+                                <button class="btn btn-outline btn-danger  dim" type="button" id="verifyDisableButton"
+                                        th:onclick="'verifyDisable(' + ${shop.shopId} + ')'">
+                                    <i class="fa fa-lock"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <!--                        <tr>-->
+                        <!--                            <td>2015韩国童装韩版牛仔童短裤</td>-->
+                        <!--                            <td>袁岳</td>-->
+                        <!--                            <td>0800 051213</td>-->
+                        <!--                            <td>深圳市有大福实业有限公司</td>-->
+                        <!--                            <td><span class="pie">0.52/1.561</span></td>-->
+                        <!--                            <td>200</td>-->
+                        <!--                            <td>2015.09.10</td>-->
+                        <!--                            <td>-->
+                        <!--                                <a href="#"><i class="fa fa-check text-navy"></i> 通过</a>-->
+                        <!--                                <a href="#"><i class="fa fa-times text-danger"></i> 通过</a>-->
+                        <!--                            </td>-->
+                        <!--                        </tr>-->
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                            <td colspan="5">
+                                <ul class="pagination pull-right"></ul>
+                            </td>
+                        </tr>
+                        </tfoot>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- 全局js -->
+<script src="/js/jquery.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/plugins/footable/footable.all.min.js"></script>
+
+<!-- 自定义js -->
+<script src="/js/content.js?v=1.0.0"></script>
+<script>
+    $(document).ready(function () {
+        $('.footable').footable();
+        $('.footable2').footable();
+    });
+</script>
+</body>
+<script src="/js/admin/shopManager.js"></script>
+</html>

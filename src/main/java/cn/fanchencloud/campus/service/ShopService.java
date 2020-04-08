@@ -79,4 +79,21 @@ public interface ShopService {
      * @return 商铺列表
      */
     List<Shop> getShopList(String shopName, Integer shopCategoryId, Integer areaId, Integer rowIndex, Integer pageSize, Integer parentClassNumber);
+
+    /**
+     * 返回管理员页面所需要的所有商铺列表
+     *
+     * @return 商铺列表
+     */
+    List<Shop> getAdministratorShopList();
+
+
+    /**
+     * 修改商铺的状态！
+     *
+     * @param shopId 商铺Id
+     * @param status 商铺状态
+     * @return 修改状态
+     */
+    boolean modifyShopStatus(int shopId, boolean status);
 }

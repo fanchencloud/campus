@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="utf-8">
@@ -21,6 +21,15 @@
             window.top.location = window.location;
         }
     </script>
+    <style type="text/css">
+        .myLoginClass {
+            color: #4cae4c;
+        }
+
+        .PromptData {
+            color: red;
+        }
+    </style>
 
 </head>
 
@@ -28,19 +37,20 @@
 <div class="signinpanel">
     <div class="row">
         <div class="col-sm-12">
-            <form method="post" action="index.html">
-                <h4 class="no-margins">登录：</h4>
-                <p class="m-t-md">登录到H+后台主题UI框架</p>
-                <input type="text" class="form-control uname" placeholder="用户名"/>
-                <input type="password" class="form-control pword m-b" placeholder="密码"/>
-                <a href="">忘记密码了？</a>
+            <form method="post" action="/admin/login">
+                <h4 class="no-margins myLoginClass">登录：
+                    <span th:if="${PromptData != null}" class="PromptData" th:text="${PromptData}"></span>
+                </h4>
+                <p class="m-t-md myLoginClass">登录管理员后台界面</p>
+                <label for="username">
+                    <input type="text" id="username" name="username" class="form-control uname" placeholder="用户名" autocomplete="off"/>
+                </label>
+                <label for="password">
+                    <input type="password" id="password" name="password" class="form-control pword m-b" placeholder="密码"
+                           autocomplete="off"/>
+                </label>
                 <button class="btn btn-success btn-block">登录</button>
             </form>
-        </div>
-    </div>
-    <div class="signup-footer">
-        <div class="pull-left">
-            &copy; hAdmin
         </div>
     </div>
 </div>

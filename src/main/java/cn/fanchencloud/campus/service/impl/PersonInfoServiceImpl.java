@@ -1,9 +1,13 @@
 package cn.fanchencloud.campus.service.impl;
 
+import cn.fanchencloud.campus.entity.LocalAccount;
+import cn.fanchencloud.campus.entity.Shop;
+import cn.fanchencloud.campus.mapper.LocalAccountMapper;
 import cn.fanchencloud.campus.mapper.PersonInfoMapper;
 import cn.fanchencloud.campus.entity.PersonInfo;
 import cn.fanchencloud.campus.model.FileContainer;
 import cn.fanchencloud.campus.model.JsonResponse;
+import cn.fanchencloud.campus.model.User;
 import cn.fanchencloud.campus.service.PersonInfoService;
 import cn.fanchencloud.campus.util.ImageUtils;
 import cn.fanchencloud.campus.util.PathUtils;
@@ -20,6 +24,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * Created by handsome programmer.
@@ -41,6 +51,7 @@ public class PersonInfoServiceImpl implements PersonInfoService {
      * 注入用户信息持久层
      */
     private PersonInfoMapper personInfoMapper;
+    private LocalAccountMapper localAccountMapper;
 
     @Override
     public PersonInfo getPersonInfo(int id) {
@@ -130,6 +141,31 @@ public class PersonInfoServiceImpl implements PersonInfoService {
         personInfo.setHeadPortrait(shopImageAddress);
     }
 
+    @Override
+    public List<User> getAdministratorUserList() {
+        List<PersonInfo> personInfoList = personInfoMapper.queryAdministratorUserList();
+        Map<Integer, LocalAccount> accountMap = localAccountMapper.queryAdministratorLocalAccountList();
+        return personInfoList.stream().map(personInfo -> {
+            User user = new User(personInfo);
+            user.setUsername(accountMap.get(user.getId()).getUsername());
+            return user;
+        }).collect(Collectors.toList());
+    }
+
+    @Override
+    public boolean modifyUserStatus(int userId, boolean status) {
+        PersonInfo personInfo = new PersonInfo();
+        personInfo.setId(userId);
+        // 修改用户的可用状态 true - 为可用 ， false - 为不可用  || 0 禁止使用本商城 1允许使用本商城
+        if (status) {
+            personInfo.setEnableStatus(1);
+        } else {
+            personInfo.setEnableStatus(0);
+        }
+        personInfo.setLastEditTime(new Date());
+        return personInfoMapper.updateUserMessage(personInfo) > 0;
+    }
+
     @Autowired
     public void setPersonInfoMapper(PersonInfoMapper personInfoMapper) {
         this.personInfoMapper = personInfoMapper;
@@ -138,5 +174,10 @@ public class PersonInfoServiceImpl implements PersonInfoService {
     @Autowired
     public void setDataSourceTransactionManager(DataSourceTransactionManager dataSourceTransactionManager) {
         this.dataSourceTransactionManager = dataSourceTransactionManager;
+    }
+
+    @Autowired
+    public void setLocalAccountMapper(LocalAccountMapper localAccountMapper) {
+        this.localAccountMapper = localAccountMapper;
     }
 }

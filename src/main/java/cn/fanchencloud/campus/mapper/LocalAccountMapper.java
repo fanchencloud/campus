@@ -1,8 +1,12 @@
 package cn.fanchencloud.campus.mapper;
 
 import cn.fanchencloud.campus.entity.LocalAccount;
+import org.apache.ibatis.annotations.MapKey;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by handsome programmer.
@@ -55,4 +59,12 @@ public interface LocalAccountMapper {
      * @return 用户本地信息
      */
     LocalAccount getRecordByUsername(String username);
+
+    /**
+     * 查询管理员页面所需要的所有账户列表（使用user_id 做map的key）
+     *
+     * @return 用户列表
+     */
+    @MapKey("userId")
+    Map<Integer, LocalAccount> queryAdministratorLocalAccountList();
 }

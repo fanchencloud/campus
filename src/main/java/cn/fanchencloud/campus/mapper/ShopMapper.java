@@ -68,4 +68,10 @@ public interface ShopMapper {
      * @return 记录条数
      */
     int queryShopNumber(@Param("shop") Shop shop);
+
+    /**
+     * 查询管理员页面所需要的商铺列表
+     * @return 商铺列表
+     */
+    List<Shop> queryAdministratorShopList();
 }

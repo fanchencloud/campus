@@ -3,6 +3,7 @@ package cn.fanchencloud.campus.controller.error;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 @Log4j2
 public class MyErrorController implements ErrorController {
-    @RequestMapping("/error")
+    @GetMapping(value = "/error")
     public String handleError(HttpServletRequest request) {
         //获取statusCode:401,404,500
         Integer statusCode = (Integer) request.getAttribute("javax.servlet.error.status_code");

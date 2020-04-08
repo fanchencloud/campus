@@ -4,6 +4,8 @@ package cn.fanchencloud.campus.mapper;
 import cn.fanchencloud.campus.entity.PersonInfo;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 /**
  * Created by handsome programmer.
  * User: chen
@@ -46,4 +48,7 @@ public interface PersonInfoMapper {
      * @return 更新结果
      */
     int updateUserMessage(PersonInfo personInfo);
+
+
+    List<PersonInfo> queryAdministratorUserList();
 }

@@ -41,7 +41,7 @@ public class PersonInfo extends Base implements Serializable {
     private String gender;
 
     /**
-     * 状态
+     * 用户状态 0 禁止使用本商城 1允许使用本商城
      */
     private Integer enableStatus;
 

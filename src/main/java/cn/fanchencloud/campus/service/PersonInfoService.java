@@ -3,9 +3,11 @@ package cn.fanchencloud.campus.service;
 import cn.fanchencloud.campus.entity.PersonInfo;
 import cn.fanchencloud.campus.model.FileContainer;
 import cn.fanchencloud.campus.model.JsonResponse;
+import cn.fanchencloud.campus.model.User;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.util.List;
 
 /**
  * Created by handsome programmer.
@@ -49,4 +51,20 @@ public interface PersonInfoService {
      * @return 更新结果
      */
     JsonResponse updateMessage(PersonInfo personInfo, FileContainer headImage);
+
+    /**
+     * 修改用户的状态！
+     *
+     * @param userId 用户id
+     * @param status 用户状态
+     * @return 修改状态
+     */
+    boolean modifyUserStatus(int userId, boolean status);
+
+    /**
+     * 返回管理员页面所需要的所有用户列表
+     *
+     * @return 用户列表
+     */
+    List<User> getAdministratorUserList();
 }

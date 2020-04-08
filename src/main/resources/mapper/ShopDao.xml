@@ -38,7 +38,8 @@
                shop_address,
                last_edit_time,
                phone,
-               shop_img
+               shop_img,
+               enable_status
         from shop
         where shop_id = #{shopId};
     </select>
@@ -47,6 +48,7 @@
         from shop
         where shop_id = #{shopId};
     </select>
+    <!--    <if test="shop != null and shop.enableStatus != null">and enable_status = #{shop.enableStatus}</if>-->
     <select id="queryShopList" resultType="cn.fanchencloud.campus.entity.Shop">
         select shop_id,
         owner_id,
@@ -67,8 +69,8 @@
             <if test="shop != null and shop.shopCategoryId != null">and shop_category_id = #{shop.shopCategoryId}</if>
             <if test="shop != null and shop.areaId != null">and area_id = #{shop.areaId}</if>
             <if test="shop != null and shop.shopName != null"><![CDATA[and shop_name like '%${shop.shopName}%']]></if>
-            <if test="shop != null and shop.enableStatus != null">and enable_status = #{shop.enableStatus}</if>
             <if test="shop != null and shop.ownerId != null">and owner_id = #{shop.ownerId}</if>
+            and enable_status =1
         </where>
         order by priority desc ,enable_status desc
         limit #{rowIndex},#{pageSize};
@@ -83,5 +85,16 @@
             <if test="shop.enableStatus != null">and enable_status = #{shop.enableStatus}</if>
             <if test="shop.ownerId != null">and owner_id = #{shop.ownerId}</if>
         </where>
+    </select>
+    <select id="queryAdministratorShopList" resultType="cn.fanchencloud.campus.entity.Shop">
+        select shop_id,
+               shop_name,
+               shop_description,
+               shop_address,
+               phone,
+               create_time,
+               last_edit_time,
+               enable_status
+        from shop
     </select>
 </mapper>

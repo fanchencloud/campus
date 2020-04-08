@@ -464,6 +464,21 @@ public class ShopController {
         return JsonResponse.errorMsg("修改失败");
     }
 
+    /**
+     * 通过商铺id 查询商铺的门面照
+     *
+     * @param shopId 商铺id
+     */
+    @GetMapping("/getShopImage")
+    public void getShopImage(@RequestParam("shopId") int shopId, HttpServletResponse response) {
+        File productThumbnail = shopService.getShopImage(shopId);
+        try {
+            CommonUtils.exportPictureData(response, productThumbnail);
+        } catch (IOException e) {
+            logger.error("输出图片文件失败！失败原因：" + e.getMessage());
+        }
+    }
+
 
     @Autowired
     public void setShopService(ShopService shopService) {

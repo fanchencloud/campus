@@ -220,6 +220,25 @@ public class ShopServiceImpl implements ShopService {
         shop.setShopImg(shopImageAddress);
     }
 
+    @Override
+    public List<Shop> getAdministratorShopList() {
+        return shopMapper.queryAdministratorShopList();
+    }
+
+    @Override
+    public boolean modifyShopStatus(int shopId, boolean status) {
+        Shop shop = new Shop();
+        shop.setShopId(shopId);
+        // 修改商铺的可用状态 true - 为可用 ， false - 为不可用
+        if (status) {
+            shop.setEnableStatus(1);
+        } else {
+            shop.setEnableStatus(-1);
+        }
+        shop.setLastEditTime(new Date());
+        return shopMapper.updateShop(shop) > 0;
+    }
+
     @Autowired
     public void setShopMapper(ShopMapper shopMapper) {
         this.shopMapper = shopMapper;

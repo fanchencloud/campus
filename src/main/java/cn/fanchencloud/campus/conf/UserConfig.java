@@ -15,10 +15,31 @@ public class UserConfig {
      * 普通用户
      */
     public static final String GENERAL_USER = "普通用户";
+
+    /**
+     * 普通顾客的身份标识
+     */
+    public static final int GENERAL_USER_INDEX = 1;
+
     /**
      * 商家
      */
     public static final String BUSINESS = "商家";
+
+    /**
+     * 商家的身份标识
+     */
+    public static final int BUSINESS_INDEX = 2;
+
+    /**
+     * 管理员
+     */
+    public static final String ADMINISTRATOR = "管理员";
+
+    /**
+     * 管理员的身份标识
+     */
+    public static final int ADMINISTRATOR_INDEX = 3;
 
     /**
      * 登录成功

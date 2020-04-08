@@ -33,8 +33,22 @@
                email,
                head_portrait,
                enable_status,
+               create_time,
                user_type
         from person_info
         where id = #{id};
+    </select>
+    <select id="queryAdministratorUserList" resultType="cn.fanchencloud.campus.entity.PersonInfo">
+        select id,
+               name,
+               gender,
+               phone,
+               email,
+               head_portrait,
+               enable_status,
+               create_time,
+               user_type
+        from person_info
+        where user_type != 3;
     </select>
 </mapper>
