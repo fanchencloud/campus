@@ -2,9 +2,11 @@ package cn.fanchencloud.campus.mapper;
 
 
 import cn.fanchencloud.campus.entity.PersonInfo;
+import org.apache.ibatis.annotations.MapKey;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by handsome programmer.
@@ -49,6 +51,19 @@ public interface PersonInfoMapper {
      */
     int updateUserMessage(PersonInfo personInfo);
 
-
+    /**
+     * 查询管理员页面所需要的用户列表
+     *
+     * @return 用户列表
+     */
     List<PersonInfo> queryAdministratorUserList();
+
+    /**
+     * 根据用户 userId 查询用户信息列表
+     *
+     * @param userIdList 用户 userId 集合
+     * @return 信息列表
+     */
+    @MapKey("id")
+    Map<Integer, PersonInfo> getRecordsByUserIds(List<Integer> userIdList);
 }

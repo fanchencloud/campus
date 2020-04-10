@@ -67,4 +67,12 @@ public interface LocalAccountMapper {
      */
     @MapKey("userId")
     Map<Integer, LocalAccount> queryAdministratorLocalAccountList();
+
+    /**
+     * 根据用户userId 查询列表
+     * @param userIdList 用户userId 集合
+     * @return 用户本地账号列表
+     */
+    @MapKey("userId")
+    Map<Integer, LocalAccount> getRecordsByUserIds(List<Integer> userIdList);
 }

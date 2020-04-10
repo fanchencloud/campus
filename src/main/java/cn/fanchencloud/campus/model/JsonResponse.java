@@ -65,6 +65,10 @@ public class JsonResponse {
         return new JsonResponse(500, msg, null);
     }
 
+    public static JsonResponse error(String message, Object data) {
+        return new JsonResponse(500, message, data);
+    }
+
     public static JsonResponse errorMap(Object data) {
         return new JsonResponse(501, "error", data);
     }

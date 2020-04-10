@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.fanchencloud.campus.mapper.CommentMapper">
+    <insert id="addRecord" useGeneratedKeys="true" keyProperty="id" keyColumn="id"
+            parameterType="cn.fanchencloud.campus.entity.Comment">
+        insert into comment(user_id, shop_id, detail, create_time)
+        values (#{userId}, #{shopId}, #{detail}, #{createTime});
+    </insert>
+    <select id="queryCommentByShopId" resultType="cn.fanchencloud.campus.entity.Comment">
+        select id, user_id, shop_id, detail, create_time
+        from comment
+        where shop_id = #{shopId}
+        order by create_time DESC;
+    </select>
+    <select id="getCommentById" resultType="cn.fanchencloud.campus.entity.Comment">
+        select id, user_id, shop_id, detail, create_time
+        from comment
+        where id = #{id};
+    </select>
+</mapper>

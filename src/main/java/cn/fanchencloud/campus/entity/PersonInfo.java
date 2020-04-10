@@ -14,6 +14,7 @@ import java.util.Date;
  */
 public class PersonInfo extends Base implements Serializable {
 
+    private static final long serialVersionUID = 5567249435155066895L;
     /**
      * id
      */

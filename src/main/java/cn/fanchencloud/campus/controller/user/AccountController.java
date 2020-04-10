@@ -13,15 +13,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by handsome programmer.
@@ -100,6 +99,23 @@ public class AccountController {
         }
     }
 
+    /**
+     * 获取用户的头像
+     *
+     * @param response 服务器响应
+     */
+    @GetMapping(value = "/getUserImageById")
+    public void getUserImageById(HttpServletRequest request, HttpServletResponse response,
+                                 @RequestParam("userId") int userId) {
+        // 获取该用户头像的文件流
+        File userImage = personInfoService.getUserImage(userId);
+        try {
+            CommonUtils.exportPictureData(response, userImage);
+        } catch (IOException e) {
+            logger.error("输出图片文件失败！失败原因：" + e.getMessage());
+        }
+    }
+
     @GetMapping(value = "/isLogin")
     @ResponseBody
     public JsonResponse isLogin(HttpServletRequest request) {
@@ -108,6 +124,37 @@ public class AccountController {
             return JsonResponse.errorMsg("你还没登录，请登录！");
         } else {
             return JsonResponse.ok("已登录！");
+        }
+    }
+
+
+    /**
+     * 检查用户的评论权限
+     *
+     * @param request 请求
+     * @param shopId  请求的商铺Id
+     * @return 检验信息
+     */
+    @GetMapping(value = "/checkPermissions")
+    @ResponseBody
+    public JsonResponse checkPermissions(HttpServletRequest request,
+                                         @RequestParam("shopId") int shopId) {
+        LocalAccount user = (LocalAccount) request.getSession().getAttribute("user");
+        Map<String, Object> map = new HashMap<>(4);
+        if (user == null) {
+            // 未登录
+            map.put("status", 400);
+            map.put("message", "你还没登录，请登录！");
+            return JsonResponse.error(null, map);
+        } else if (user.getUserType() == UserConfig.GENERAL_USER_INDEX) {
+            // 已经登录，是普通用户
+            map.put("status", 200);
+            return JsonResponse.error(null, map);
+        } else {
+            // 已经登录，但不是普通用户或者未在此商铺消费
+            map.put("status", 401);
+            map.put("message", "已登录，无操作权限！");
+            return JsonResponse.error(null, map);
         }
     }
 

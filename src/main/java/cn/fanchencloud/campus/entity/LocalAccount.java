@@ -34,6 +34,7 @@ public class LocalAccount extends Base implements Serializable {
 
     /**
      * 用户类别
+     * 1 顾客 2 店家 3 超级管理员
      */
     private int userType;
 

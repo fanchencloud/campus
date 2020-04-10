@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cn.fanchencloud.campus.mapper.PersonInfoMapper">
+
+    <resultMap id="personInfoMap" type="cn.fanchencloud.campus.entity.PersonInfo">
+        <result column="id" property="id" jdbcType="INTEGER" javaType="int"/>
+        <result column="name" property="name" jdbcType="VARCHAR" javaType="string"/>
+        <result column="phone" property="phone" jdbcType="VARCHAR" javaType="string"/>
+        <result column="head_portrait" property="headPortrait" jdbcType="VARCHAR" javaType="string"/>
+        <result column="email" property="email" jdbcType="VARCHAR" javaType="string"/>
+        <result column="gender" property="gender" jdbcType="VARCHAR" javaType="string"/>
+        <result column="enable_status" property="enableStatus" jdbcType="INTEGER" javaType="int"/>
+        <result column="user_type" property="userType" jdbcType="INTEGER" javaType="int"/>
+        <result column="create_time" property="createTime" jdbcType="DATE"/>
+        <result column="last_edit_time" property="lastEditTime" jdbcType="DATE"/>
+    </resultMap>
     <insert id="addPersonInfo" useGeneratedKeys="true" keyProperty="id" keyColumn="id"
             parameterType="cn.fanchencloud.campus.entity.PersonInfo">
         insert into person_info(create_time, last_edit_time, enable_status, user_type)
@@ -50,5 +63,21 @@
                user_type
         from person_info
         where user_type != 3;
+    </select>
+    <select id="getRecordsByUserIds" resultType="java.util.Map" resultMap="personInfoMap">
+        select id,
+        name,
+        gender,
+        phone,
+        email,
+        head_portrait,
+        enable_status,
+        create_time,
+        user_type
+        from person_info
+        where id in
+        <foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
     </select>
 </mapper>

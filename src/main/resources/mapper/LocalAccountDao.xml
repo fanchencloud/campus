@@ -2,20 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cn.fanchencloud.campus.mapper.LocalAccountMapper">
 
-    <!--    private Integer id;-->
-    <!--    private Integer userId;-->
-    <!--    private String username;-->
-    <!--    private String password;-->
-    <!--    private int userType;-->
-    <!--    private Date createTime;-->
-    <!--    private Date lastEditTime;-->
-
     <resultMap id="localAccountMap" type="cn.fanchencloud.campus.entity.LocalAccount">
         <result column="id" property="id" jdbcType="INTEGER" javaType="int"/>
         <result column="user_id" property="userId" jdbcType="INTEGER" javaType="int"/>
         <result column="username" property="username" jdbcType="VARCHAR" javaType="string"/>
         <result column="create_time" property="createTime" jdbcType="DATE"/>
-        <result column="last_edit_time" property="lastEditTime" jdbcType="DATE"/>
         <result column="last_edit_time" property="lastEditTime" jdbcType="DATE"/>
     </resultMap>
 
@@ -53,5 +44,13 @@
     <select id="queryAdministratorLocalAccountList" resultType="java.util.Map" resultMap="localAccountMap">
         select id, user_id, username, create_time, last_edit_time
         from local_account;
+    </select>
+    <select id="getRecordsByUserIds" resultType="java.util.Map" resultMap="localAccountMap">
+        select id, user_id, username, create_time, last_edit_time
+        from local_account
+        where user_id in
+        <foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
     </select>
 </mapper>
