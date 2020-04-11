@@ -138,3 +138,23 @@ img {
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
 }
+
+/* 创建订单 start */
+
+.demos-second-title {
+    text-align: center;
+    font-size: 24px;
+    color: #3cc51f;
+    font-weight: 400;
+    margin: 0 15%;
+}
+
+.closeButton a {
+    color: white;
+}
+
+.myPreviewPage {
+    padding-top: 8rem;
+}
+
+/* 创建订单 end */

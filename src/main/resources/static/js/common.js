@@ -57,10 +57,11 @@ const validateRequired = function (value, message) {
  * @returns {boolean} 参数为空返回真，否则反复假
  */
 const validateParameterRequired = function (value) {
-    return !!(value === undefined //未初始化的判断
-        || value == null //object类型的判断
-        || (typeof (value) == 'string' && (value === '' || value.match(/\s+/)))
-        || (typeof (value) == 'number' && isNaN(value)));
+    // return !!(value === undefined //未初始化的判断
+    //     || value == null //object类型的判断
+    //     || (typeof (value) == 'string' && (value === '' || value.match(/\s+/)))
+    //     || (typeof (value) == 'number' && isNaN(value)));
+    return !checkIsNullOrEmpty(value);
 };
 
 const checkIsNullOrEmpty = function (value) {

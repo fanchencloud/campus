@@ -49,20 +49,107 @@
 </div>
 <!-- 显示创建订单按钮 -->
 <div class="demos-content-padded" id="createOrderButton" style="display: none;">
-    <a href="javascript:;" class="weui-btn weui-btn_primary open-popup" data-target="#full">显示全屏(默认)Popup</a>
+    <a href="javascript:;" class="weui-btn weui-btn_primary open-popup" data-target="#full">预定</a>
 </div>
+
 <div id="full" class='weui-popup__container'>
     <div class="weui-popup__overlay"></div>
     <div class="weui-popup__modal">
         <header class='demos-header'>
             <h2 class="demos-second-title">填写订单信息</h2>
-            <!-- <p class="demos-sub-title">By 言川 @2016/03/30</p> -->
         </header>
-        <input type="text" id='city-picker'/>
-
+        <!--        <input type="text" id='city-picker'/>-->
+        <div class="weui-cells weui-cells_form">
+            <div class="weui-cells__title"></div>
+            <div class="weui-cell">
+                <div class="weui-cell__hd">
+                    <label class="weui-label" for="UserSNickname">订单用户名</label></div>
+                <div class="weui-cell__bd">
+                    <input id="UserSNickname" class="weui-input" type="text" placeholder="请输入订单用户名" autocomplete="off"/>
+                </div>
+            </div>
+            <div class="weui-cells__title"></div>
+            <div class="weui-cell">
+                <div class="weui-cell__hd">
+                    <label class="weui-label" for="phone">手机号</label></div>
+                <div class="weui-cell__bd">
+                    <input id="phone" class="weui-input" type="tel" placeholder="请输入手机号码" autocomplete="off"/>
+                </div>
+            </div>
+            <div class="weui-cells__title">地址</div>
+            <div class="weui-cell">
+                <div class="weui-cell__bd">
+                    <label for='city-picker'></label>
+                    <input class="weui-input" type="text" id='city-picker' autocomplete="off"/>
+                </div>
+            </div>
+            <div class="weui-cells">
+                <div class="weui-cell">
+                    <div class="weui-cell__bd">
+                        <label for="fullAddress"></label>
+                        <input id="fullAddress" class="weui-input" type="text" placeholder="请输入详细地址">
+                    </div>
+                </div>
+            </div>
+            <div class="weui-cells__title">备注</div>
+            <div class="weui-cells weui-cells_form">
+                <div class="weui-cell">
+                    <div class="weui-cell__bd">
+                        <label>
+                            <textarea id="remark" class="weui-textarea" placeholder="请输入备注" rows="3"></textarea>
+                        </label>
+                        <div class="weui-textarea-counter"><span>0</span>/200</div>
+                    </div>
+                </div>
+            </div>
+            <div class="weui-btn-area">
+                <a class="weui-btn weui-btn_primary" href="javascript:void(0);" onclick="submitOrderForm()"
+                   id="showTooltips">确定</a>
+            </div>
+        </div>
 
         <div class="weui-footer weui-footer_fixed-bottom closeButton">
             <a href="javascript:;" class="weui-btn weui-btn_primary close-popup">关闭</a>
+        </div>
+    </div>
+</div>
+
+<div id="PreviewPage" class="weui-popup__container">
+    <div class="weui-popup__overlay"></div>
+    <div class="weui-popup__modal">
+        <div class="weui-form-preview myPreviewPage">
+            <div class="weui-form-preview__hd">
+                <label class="weui-form-preview__label">付款金额</label>
+                <em class="weui-form-preview__value" id="paymentAmount">¥2400.00</em>
+            </div>
+            <div class="weui-form-preview__bd">
+                <div class="weui-form-preview__item">
+                    <label class="weui-form-preview__label">商品</label>
+                    <span class="weui-form-preview__value" id="commodity">电动打蛋机</span>
+                </div>
+                <div class="weui-form-preview__item">
+                    <label class="weui-form-preview__label">订单用户</label>
+                    <span class="weui-form-preview__value" id="orderUsername">名字名字名字</span>
+                </div>
+                <div class="weui-form-preview__item">
+                    <label class="weui-form-preview__label">联系方式</label>
+                    <span class="weui-form-preview__value" id="contactInformation">名字名字名字</span>
+                </div>
+                <div class="weui-form-preview__item">
+                    <label class="weui-form-preview__label">地址</label>
+                    <span class="weui-form-preview__value" id="orderAddress">很长很长的名字很长很长的名字很长很长的名字很长很长的名字很长很长的名字</span>
+                </div>
+                <div class="weui-form-preview__item">
+                    <label class="weui-form-preview__label">备注</label>
+                    <span class="weui-form-preview__value" id="orderRemark">很长很长的名字很长很长的名字很长很长的名字很长很长的名字很长很长的名字</span>
+                </div>
+            </div>
+            <div class="weui-form-preview__ft">
+                <a class="weui-form-preview__btn weui-form-preview__btn_default" href="javascript:">取消</a>
+                <button type="button" class="weui-form-preview__btn weui-form-preview__btn_primary" href="javascript:">
+                    确认
+                </button>
+            </div>
         </div>
     </div>
 </div>
