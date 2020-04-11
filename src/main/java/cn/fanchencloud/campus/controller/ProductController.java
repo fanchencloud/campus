@@ -16,16 +16,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -69,40 +68,75 @@ public class ProductController {
         return "product/addProduct";
     }
 
+    /**
+     * 添加商品信息
+     *
+     * @param request               请求会话
+     * @param product               商品信息
+     * @param verifyCode            验证码
+     * @param thumbnail             商品缩略图
+     * @param productDetailsPicture 商品详情图
+     * @return 添加结果
+     * @throws UnsupportedEncodingException 不支持的编码类型
+     */
     @PostMapping(value = "/addProduct")
     @ResponseBody
-    public JsonResponse addProduct(HttpServletRequest request) throws UnsupportedEncodingException {
-        HashMap<String, String> paramMap = new HashMap<>(4);
-        paramMap.put("product", "商品信息");
-        paramMap.put("verifyCode", "验证码");
-        paramMap.put("thumbnail", "缩略图");
-        Map<String, Object> uploadMessage = ChenHttpUtils.doUploadMessage(request, paramMap);
-        String verifyCode = (String) uploadMessage.get("verifyCode");
-        if (uploadMessage.get(CommonStrings.ERROR) != null) {
-            return (JsonResponse) uploadMessage.get(CommonStrings.ERROR);
+    public JsonResponse addProduct(HttpServletRequest request,
+                                   @RequestParam("product") String product,
+                                   @RequestParam("verifyCode") String verifyCode,
+                                   @RequestParam(value = "thumbnail", required = false) MultipartFile thumbnail,
+                                   @RequestParam(value = "productDetailsPicture", required = false) MultipartFile[] productDetailsPicture) throws UnsupportedEncodingException {
+        logger.debug("上传的商品详情图片数量 = " + productDetailsPicture.length);
+        // 图片验证码为空
+        if (StringUtils.isBlank(product)) {
+            return JsonResponse.errorMsg("提交的商品信息为空!");
         }
-        List<Object> list = CommonUtils.validateCode(verifyCode, request);
-        if (list.size() > 0) {
-            return (JsonResponse) list.get(0);
+        // 图片验证码为空
+        if (StringUtils.isBlank(verifyCode)) {
+            return JsonResponse.errorMsg("验证码不能为空!");
+        } else {
+            String cacheCode = (String) request.getSession().getAttribute(CommonStrings.VALIDATE_CODE);
+            // 验证码错误
+            if (!(cacheCode.toLowerCase().equals(verifyCode.toLowerCase()))) {
+                return JsonResponse.errorMsg("验证码错误！");
+            }
         }
         // 商品信息
-        String productMessage = (String) uploadMessage.get("product");
-        Product product = JSON.parseObject(productMessage, Product.class);
+        Product p = JSON.parseObject(product, Product.class);
         // 缩略图
-        FileContainer thumbnail = (FileContainer) uploadMessage.get("thumbnail");
+        FileContainer productThumbnail = null;
+        if (thumbnail != null) {
+            productThumbnail = new FileContainer();
+            try {
+                productThumbnail.setFileInputStream(thumbnail.getInputStream());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            productThumbnail.setFileName(thumbnail.getOriginalFilename());
+        }
         // 处理详情图片
         List<FileContainer> fileContainerList = null;
-        if (uploadMessage.get(CommonStrings.FILE_LIST) instanceof List) {
-            fileContainerList = myCast(uploadMessage.get(CommonStrings.FILE_LIST));
+        if (productDetailsPicture != null) {
+            fileContainerList = new ArrayList<>(productDetailsPicture.length);
+            for (MultipartFile temp : productDetailsPicture) {
+                FileContainer t = new FileContainer();
+                try {
+                    t.setFileInputStream(temp.getInputStream());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                t.setFileName(temp.getOriginalFilename());
+                fileContainerList.add(t);
+            }
         }
         Integer shopId = (Integer) request.getSession().getAttribute(CommonStrings.SHOP_ID);
-        if (shopId == null && product.getShopId() == null) {
+        if (shopId == null && p.getShopId() == null) {
             return JsonResponse.errorMsg("没有指明店铺！");
         }
         if (shopId != null) {
-            product.setShopId(shopId);
+            p.setShopId(shopId);
         }
-        return productService.addProduct(product, thumbnail, fileContainerList);
+        return productService.addProduct(p, productThumbnail, fileContainerList);
     }
 
     /**

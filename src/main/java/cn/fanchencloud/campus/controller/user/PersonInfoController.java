@@ -9,6 +9,8 @@ import cn.fanchencloud.campus.util.CommonStrings;
 import com.alibaba.fastjson.JSON;
 import org.apache.commons.fileupload.disk.DiskFileItem;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -32,6 +34,8 @@ import java.io.UnsupportedEncodingException;
 @Controller
 @RequestMapping(value = "/person")
 public class PersonInfoController {
+    
+    private static final Logger logger = LoggerFactory.getLogger(PersonInfoController.class);
 
     /**
      * 注入个人信息服务层
@@ -100,8 +104,6 @@ public class PersonInfoController {
                                        @RequestParam("user") String user,
                                        @RequestParam("verifyCode") String verifyCode,
                                        @RequestParam(value = "thumbnail", required = false) MultipartFile thumbnail) throws UnsupportedEncodingException {
-        System.out.println(user);
-        System.out.println(verifyCode);
         // 图片验证码为空
         if (StringUtils.isBlank(user)) {
             return JsonResponse.errorMsg("提交的用户信息为空!");

@@ -300,16 +300,16 @@ const submitFunction = function () {
         product.shopId = getUrlParam("shopId");
 
         // 处理缩略图
-        var file = productThumbnail[0];
-        var str = file.name;
-        var pos = str.lastIndexOf(".");
-        var suffixName = str.substring(pos, str.length);
+        const file = productThumbnail[0];
+        const str = file.name;
+        const pos = str.lastIndexOf(".");
+        const suffixName = str.substring(pos, str.length);
         // 创建新文件对象
-        var newThumbnail = new File([file], "thumbnail" + suffixName, {type: "image/*"});
+        const newThumbnail = new File([file], "thumbnail" + suffixName, {type: "image/*"});
 
-        var formData = new FormData();
-        for (var i = 0; i < productDetailsPicture.length; i++) {
-            formData.append("productDetailsPicture" + i, productDetailsPicture[i]);
+        let formData = new FormData();
+        for (let i = 0; i < productDetailsPicture.length; i++) {
+            formData.append("productDetailsPicture", productDetailsPicture[i]);
         }
         formData.append("thumbnail", newThumbnail);
         formData.append("product", JSON.stringify(product));
@@ -319,7 +319,7 @@ const submitFunction = function () {
 };
 
 const callBackFunction = function () {
-    window.location.href = "//shop/managerProduct?shopId=" + shopId;
+    window.location.href = "/shop/managerProduct?shopId=" + shopId;
 };
 
 const checkButtonFunction = function () {

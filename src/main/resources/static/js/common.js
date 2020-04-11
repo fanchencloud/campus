@@ -37,11 +37,18 @@ const getUrlParam = function (paraName) {
  * @returns {boolean} 参数为空返回真，否则反复假
  */
 const validateRequired = function (value, message) {
-    if (validateParameterRequired(value)) {
+    // if (validateParameterRequired(value)) {
+    //     $.alert(message);
+    //     return true;
+    // }
+    // return false;
+    if (checkIsNullOrEmpty(value)) {
+        // 数据不为空
+        return false;
+    } else {
         $.alert(message);
         return true;
     }
-    return false;
 };
 
 /**
@@ -54,6 +61,13 @@ const validateParameterRequired = function (value) {
         || value == null //object类型的判断
         || (typeof (value) == 'string' && (value === '' || value.match(/\s+/)))
         || (typeof (value) == 'number' && isNaN(value)));
+};
+
+const checkIsNullOrEmpty = function (value) {
+    //正则表达式用于判斷字符串是否全部由空格或换行符组成
+    const reg = /^\s*$/;
+    //返回值为true表示不是空字符串
+    return (value != null && value !== undefined && !reg.test(value));
 };
 
 /**
