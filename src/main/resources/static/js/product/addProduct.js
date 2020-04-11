@@ -148,9 +148,9 @@ const uploadProductDetailsPictureInput = function () {
         $.toast("详情图片超过限制", "forbidden");
     } else {
         for (let i = 0; i < list.length; i++) {
-            var str = list[i].name;
-            var pos = str.lastIndexOf(".");
-            var lastname = str.substring(pos, str.length);
+            const str = list[i].name;
+            const pos = str.lastIndexOf(".");
+            const lastname = str.substring(pos, str.length);
             productDetailsPicture.push(list[i]);
             console.log(str + "   -- 后缀名为：" + lastname);
         }
@@ -227,32 +227,32 @@ const submitFunction = function () {
         console.log("进入提交修改数据函数");
         submitFlag = false;
         // 将上传按钮设置位不可用状态
-        var checkButton = $("#registerShopSubmit");
+        const checkButton = $("#registerShopSubmit");
         checkButton.addClass("weui-btn_disabled");
-        var product = {};
+        let product = {};
         // 检查上传参数
         // 商品名称
-        var productName = $("#productName").val();
+        let productName = $("#productName").val();
         if (validateRequired(productName, "商品名称不能为空")) {
             removeDisable(checkButton);
             return false;
         }
 
         // 商品分类
-        var productCategory = $("#productCategory").val();
+        let productCategory = $("#productCategory").val();
         if (validateRequired(productCategory, "商品类别不能为空")) {
             removeDisable(checkButton);
             return false;
         }
 
         // 优先级别
-        var productPriority = $("#productPriority").val();
+        let productPriority = $("#productPriority").val();
         if (validateParameterRequired(productPriority)) {
             productPriority = 0;
         }
 
         // 原价
-        var originalPrice = $("#originalPrice").val();
+        let originalPrice = $("#originalPrice").val();
         if (validateRequired(originalPrice, "原价不能为空")) {
             removeDisable(checkButton);
             return false;
@@ -273,7 +273,7 @@ const submitFunction = function () {
         }
 
         // 验证码
-        var verifyCode = $("#verifyCode").val();
+        let verifyCode = $("#verifyCode").val();
         if (validateRequired(verifyCode, "验证码不能为空")) {
             removeDisable(checkButton);
             return false;
@@ -288,7 +288,7 @@ const submitFunction = function () {
         // 原价
         product.normalPrice = originalPrice;
         // 折扣价
-        var promotionPrice = $("#currentPrice").val();
+        let promotionPrice = $("#currentPrice").val();
         if (validateParameterRequired(promotionPrice)) {
             console.log("没填折扣价！");
         } else {
@@ -319,11 +319,11 @@ const submitFunction = function () {
 };
 
 const callBackFunction = function () {
-    window.location.href = "/shop/managerProduct?shopId=" + shopId;
+    window.location.href = "/shop/managerProduct?shopId=" + getUrlParam("shopId");
 };
 
 const checkButtonFunction = function () {
     // 将上传按钮设置位不可用状态
-    var checkButton = $("#registerShopSubmit");
+    const checkButton = $("#registerShopSubmit");
     removeDisable(checkButton);
 };

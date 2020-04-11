@@ -159,6 +159,23 @@ public class AccountController {
     }
 
     /**
+     * 校验是否显示预定按钮
+     *
+     * @param request 请求会话
+     * @return 校验结果
+     */
+    @ResponseBody
+    @GetMapping(value = "/checkReservation")
+    public JsonResponse checkReservation(HttpServletRequest request) {
+        LocalAccount user = (LocalAccount) request.getSession().getAttribute("user");
+        if (user != null && user.getUserType() == UserConfig.GENERAL_USER_INDEX) {
+            return JsonResponse.ok();
+        } else {
+            return JsonResponse.errorMsg("无权限");
+        }
+    }
+
+    /**
      * 请求获取用户信息
      *
      * @param request 数据请求

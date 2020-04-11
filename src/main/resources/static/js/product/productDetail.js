@@ -37,4 +37,16 @@ $(function () {
             $.alert("后台数据错误！请联系管理员！");
         }
     });
+    // 是否显示预定按钮
+    $.get("/user/checkReservation", function (response) {
+        console.log("成功接收到来自服务器数据");
+        let target = document.getElementById("createOrderButton");
+        if (response.status === 200) {
+            // 显示创建订单按钮
+            target.style.display = "block";
+        } else {
+            $.alert("后台数据错误！请联系管理员！");
+            target.style.display = "none";
+        }
+    });
 });

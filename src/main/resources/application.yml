@@ -58,6 +58,7 @@ spring:
     restart:
       # 设置开启热部署
       enabled: true
+      additional-paths: src/main
   # 模板配置
   thymeleaf:
     # 这个开发配置为false，避免改了模板还要重启服务器

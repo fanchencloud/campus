@@ -116,18 +116,16 @@ public class ProductController {
         }
         // 处理详情图片
         List<FileContainer> fileContainerList = null;
-        if (productDetailsPicture != null) {
-            fileContainerList = new ArrayList<>(productDetailsPicture.length);
-            for (MultipartFile temp : productDetailsPicture) {
-                FileContainer t = new FileContainer();
-                try {
-                    t.setFileInputStream(temp.getInputStream());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                t.setFileName(temp.getOriginalFilename());
-                fileContainerList.add(t);
+        fileContainerList = new ArrayList<>(productDetailsPicture.length);
+        for (MultipartFile temp : productDetailsPicture) {
+            FileContainer t = new FileContainer();
+            try {
+                t.setFileInputStream(temp.getInputStream());
+            } catch (IOException e) {
+                e.printStackTrace();
             }
+            t.setFileName(temp.getOriginalFilename());
+            fileContainerList.add(t);
         }
         Integer shopId = (Integer) request.getSession().getAttribute(CommonStrings.SHOP_ID);
         if (shopId == null && p.getShopId() == null) {
