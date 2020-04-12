@@ -11,12 +11,16 @@ let shopDetailData = {
     city_picker: '',
     fullAddress: '',
     remark: '',
+    productId: '',
+    shopId: '',
     operating: ''
 };
 
 $(function () {
     shopDetailData.operating = false;
     console.log("页面加载完成自动执行！");
+    shopDetailData.shopId = getUrlParam("shopId");
+    shopDetailData.productId = getUrlParam("productId");
     $.get("/product/modifyInfo?id=" + getUrlParam("productId"), function (response) {
         console.log("成功接收到来自服务器数据");
         if (response.status === 200) {
@@ -82,6 +86,16 @@ const enableButton = function (target) {
     target.text("确定");
 };
 
+const disableButton1 = function (target) {
+    target.addClass("weui-btn_loading");
+    target.text("正在加载...");
+};
+
+const enableButton1 = function (target) {
+    target.removeClass("weui-btn_loading");
+    target.text("确定");
+};
+
 /**
  * 提交订单进入Preview 页面
  */
@@ -133,3 +147,46 @@ const submitOrderForm = function () {
     $("#orderAddress").html(shopDetailData.city_picker + " " + shopDetailData.fullAddress);
     $("#orderRemark").html(shopDetailData.remark);
 };
+
+const sendMessage = function () {
+    console.log("点击提交按钮！");
+    let orderInformation = {};
+    orderInformation.orderUsername = shopDetailData.UserSNickname;
+    orderInformation.orderPhone = shopDetailData.phone;
+    orderInformation.orderAddress = shopDetailData.city_picker + " " + shopDetailData.fullAddress;
+    orderInformation.orderUserRemark = shopDetailData.remark;
+    orderInformation.productId = shopDetailData.productId;
+    orderInformation.shopId = shopDetailData.shopId;
+    let btn = $("#submitOrderButton");
+    disableButton1(btn);
+    console.log("序列化：" + JSON.stringify(orderInformation));
+    $.ajax({
+        type: "POST",
+        url: "/order/submitOrder",
+        dataType: "json",
+        data: {
+            orderInformation: JSON.stringify(orderInformation)
+        },
+        success: function (response) {
+            console.log(response);
+            if (response.status === 200) {
+                console.log("提交订单成功！");
+                $.toast(response.msg);
+            } else {
+                console.log("请求失败");
+                $.toast(response.msg, "forbidden");
+            }
+        },
+        error: function (xhr) {
+            console.log("错误提示： " + xhr + " ---- " + xhr.status + " " + xhr.statusText);
+        },
+        //请求完成后回调函数 (请求成功或失败之后均调用)。参数： XMLHttpRequest 对象和一个描述成功请求类型的字符串
+        complete: function (XMLHttpRequest, textStatus) {
+            console.log("函数调用完成，将按钮设置为可用状态");
+            enableButton1(btn);
+            $.closePopup();
+        }
+    });
+
+};
+  

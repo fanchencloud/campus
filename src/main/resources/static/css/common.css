@@ -1,4 +1,7 @@
 @charset "UTF-8";
+* {
+    touch-action: pan-y;
+}
 
 .title-text-center {
     text-align: center;

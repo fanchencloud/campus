@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -33,11 +34,6 @@ public class CommentServiceImpl implements CommentService {
     private static final Logger logger = LoggerFactory.getLogger(CommentServiceImpl.class);
 
     /**
-     * 注入本地账号持久化
-     */
-    private LocalAccountMapper localAccountMapper;
-
-    /**
      * 注入用户信息持久化
      */
     private PersonInfoMapper personInfoMapper;
@@ -53,6 +49,9 @@ public class CommentServiceImpl implements CommentService {
         List<Comment> commentList = commentMapper.queryCommentByShopId(shopId);
         // 提取评论列表内的用户id
         List<Integer> userIdList = commentList.stream().map(Comment::getUserId).distinct().collect(Collectors.toList());
+        if (userIdList.size() == 0) {
+            return new ArrayList<CommentDetail>();
+        }
         Map<Integer, PersonInfo> personInfoMap = personInfoMapper.getRecordsByUserIds(userIdList);
         return commentList.stream().map(comment -> {
             CommentDetail temp = new CommentDetail();
@@ -76,11 +75,6 @@ public class CommentServiceImpl implements CommentService {
         commentDetail.setData(comment);
         commentDetail.setUsername(personInfo.getName());
         return commentDetail;
-    }
-
-    @Autowired
-    public void setLocalAccountMapper(LocalAccountMapper localAccountMapper) {
-        this.localAccountMapper = localAccountMapper;
     }
 
     @Autowired

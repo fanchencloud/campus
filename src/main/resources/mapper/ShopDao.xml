@@ -70,7 +70,7 @@
             <if test="shop != null and shop.areaId != null">and area_id = #{shop.areaId}</if>
             <if test="shop != null and shop.shopName != null"><![CDATA[and shop_name like '%${shop.shopName}%']]></if>
             <if test="shop != null and shop.ownerId != null">and owner_id = #{shop.ownerId}</if>
-            and enable_status =1
+            <if test="shop != null and shop.enableStatus != null">and enable_status = #{shop.enableStatus}</if>
         </where>
         order by priority desc ,enable_status desc
         limit #{rowIndex},#{pageSize};

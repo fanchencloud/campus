@@ -5,10 +5,7 @@ import cn.fanchencloud.campus.model.JsonResponse;
 import cn.fanchencloud.campus.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -49,7 +46,6 @@ public class ProductFrontController {
                                        @RequestParam(value = "pageSize") Integer pageSize) {
         List<Product> productList = productService.compoundSearch(productName, productCategoryId, shopId, 1, rowIndex, pageSize);
         return JsonResponse.ok(productList);
-
     }
 
     @Autowired

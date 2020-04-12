@@ -153,9 +153,9 @@ public class ShopServiceImpl implements ShopService {
 
     @Override
     public List<Shop> getShopList(String shopName, Integer shopCategoryId, Integer areaId, Integer rowIndex, Integer pageSize, Integer parentClassNumber) {
-        Shop shop = null;
+        Shop shop = new Shop();
+        shop.setEnableStatus(1);
         if (shopName != null || shopCategoryId != null || areaId != null) {
-            shop = new Shop();
             shop.setShopName(shopName);
             shop.setShopCategoryId(shopCategoryId);
             shop.setAreaId(areaId);
@@ -168,19 +168,18 @@ public class ShopServiceImpl implements ShopService {
             pageSize = 0;
         }
         if (parentClassNumber != null) {
-            if (shop == null) {
-                shop = new Shop();
-            }
             // 查询该父类编号下面的子类编号
             List<ShopCategory> shopCategories = shopCategoryService.getRegisterShopCategoryByParentId(parentClassNumber);
             List<Shop> shopList = new LinkedList<>();
             for (ShopCategory shopCategory : shopCategories) {
                 Integer id = shopCategory.getShopCategoryId();
                 shop.setShopCategoryId(id);
+                shop.setEnableStatus(1);
                 List<Shop> list = shopMapper.queryShopList(shop, rowIndex, pageSize);
                 shopList.addAll(list);
             }
             shop.setShopCategoryId(parentClassNumber);
+            shop.setEnableStatus(1);
             List<Shop> list = shopMapper.queryShopList(shop, rowIndex, pageSize);
             shopList.addAll(list);
             return shopList;
