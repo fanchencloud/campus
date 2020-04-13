@@ -1,12 +1,22 @@
 @charset "UTF-8";
 * {
     touch-action: pan-y;
+    margin: 0;
+    padding: 0;
 }
 
 .title-text-center {
     text-align: center;
     font-weight: bolder;
 }
+
+/*.demos-title {*/
+/*    text-align: center;*/
+/*    font-size: 34px;*/
+/*    color: #3cc51f;*/
+/*    font-weight: 400;*/
+/*    margin: 6% 15%;*/
+/*}*/
 
 a, a:hover, a:visited, a:link {
     text-decoration: none;

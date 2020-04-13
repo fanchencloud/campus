@@ -1,22 +1,31 @@
 package cn.fanchencloud.campus.controller;
 
+import cn.fanchencloud.campus.conf.OrderConfig;
 import cn.fanchencloud.campus.entity.LocalAccount;
 import cn.fanchencloud.campus.entity.OrderForm;
+import cn.fanchencloud.campus.entity.Product;
 import cn.fanchencloud.campus.model.JsonResponse;
+import cn.fanchencloud.campus.model.OrderFormModel;
 import cn.fanchencloud.campus.service.OrderService;
+import cn.fanchencloud.campus.service.ProductService;
 import com.alibaba.fastjson.JSON;
+import com.sun.jdi.IntegerType;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.method.support.ModelAndViewContainer;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Created by handsome programmer.
@@ -41,6 +50,57 @@ public class OrderController {
      */
     private OrderService orderService;
 
+    /**
+     * 注入商品服务
+     */
+    private ProductService productService;
+
+    /**
+     * 请求到商家的订单页面
+     *
+     * @return 页面跳转
+     */
+    @GetMapping(value = "/listShopOrder")
+    public ModelAndView listShopOrder(@RequestParam("shopId") int shopId,
+                                      @RequestParam(value = "flag", required = false) Integer flag) {
+        ModelAndView view = new ModelAndView("order/listOrder");
+        logger.debug("请求订单列表的店铺ID = " + shopId);
+        // 查询该店铺所有的订单
+        List<OrderForm> orderFormList = null;
+        if (flag == null) {
+            orderFormList = orderService.getOrderListByShopId(shopId, null);
+        } else if (flag == 1) {
+            // 已完成订单
+            orderFormList = orderService.getOrderListByShopId(shopId, 1);
+        } else {
+            // 未完成订单
+            orderFormList = orderService.getOrderListByShopId(shopId, 0);
+        }
+        if (orderFormList == null || orderFormList.size() == 0) {
+            return view;
+        }
+        List<OrderFormModel> list = orderFormList.stream().map(order -> {
+            Product p = productService.getProductByProductId(order.getProductId());
+            OrderFormModel t = new OrderFormModel(order);
+            t.setProductName(p.getProductName());
+            if (p.getPromotionPrice() != null) {
+                t.setPrice(p.getPromotionPrice().toString());
+            } else {
+                t.setPrice(p.getNormalPrice().toString());
+            }
+            return t;
+        }).collect(Collectors.toList());
+        view.addObject("orderFormList", list);
+        return view;
+    }
+
+    /**
+     * 提交订单到服务器
+     *
+     * @param request          请求会话
+     * @param orderInformation 订单信息
+     * @return 请求结果
+     */
     @PostMapping(value = "/submitOrder")
     @ResponseBody
     public JsonResponse submitOrder(HttpServletRequest request,
@@ -64,8 +124,67 @@ public class OrderController {
         }
     }
 
+    /**
+     * 确认接收订单
+     *
+     * @param orderId 订单id
+     * @param message 订单备注信息
+     * @return 请求结果
+     */
+    @PostMapping(value = "/confirmOrder")
+    @ResponseBody
+    public JsonResponse confirmOrder(@RequestParam("orderId") String orderId,
+                                     @RequestParam("message") String message) {
+        if (orderService.confirmOrder(orderId, message)) {
+            Map<String, Object> map = new HashMap<>(2);
+            OrderForm orderForm = orderService.getRecordByOrderId(orderId);
+            if (orderForm.getOrderStatus() == OrderConfig.ORDER_RECEIVED_INDEX) {
+                map.put("orderStatus", OrderConfig.ORDER_RECEIVED_STRING);
+            } else if (orderForm.getOrderStatus() == OrderConfig.ORDER_UNPROCESSED_INDEX) {
+                map.put("orderStatus", OrderConfig.ORDER_UNPROCESSED_INDEX);
+            } else {
+                map.put("orderStatus", OrderConfig.ORDER_REFUSE_STRING);
+            }
+            map.put("shopRemark", orderForm.getOrderShopRemark());
+            return JsonResponse.ok(map);
+        }
+        return JsonResponse.errorMsg("订单处理失败！");
+    }
+
+    /**
+     * 确认拒绝订单
+     *
+     * @param orderId 订单id
+     * @param message 订单备注
+     * @return 请求结果
+     */
+    @PostMapping(value = "/rejectOrder")
+    @ResponseBody
+    public JsonResponse rejectOrder(@RequestParam("orderId") String orderId,
+                                    @RequestParam("message") String message) {
+        if (orderService.rejectOrder(orderId, message)) {
+            Map<String, Object> map = new HashMap<>(2);
+            OrderForm orderForm = orderService.getRecordByOrderId(orderId);
+            if (orderForm.getOrderStatus() == OrderConfig.ORDER_RECEIVED_INDEX) {
+                map.put("orderStatus", OrderConfig.ORDER_RECEIVED_STRING);
+            } else if (orderForm.getOrderStatus() == OrderConfig.ORDER_UNPROCESSED_INDEX) {
+                map.put("orderStatus", OrderConfig.ORDER_UNPROCESSED_INDEX);
+            } else {
+                map.put("orderStatus", OrderConfig.ORDER_REFUSE_STRING);
+            }
+            map.put("shopRemark", orderForm.getOrderShopRemark());
+            return JsonResponse.ok(map);
+        }
+        return JsonResponse.errorMsg("订单处理失败！");
+    }
+
     @Autowired
     public void setOrderService(OrderService orderService) {
         this.orderService = orderService;
+    }
+
+    @Autowired
+    public void setProductService(ProductService productService) {
+        this.productService = productService;
     }
 }

@@ -42,4 +42,13 @@ public interface CommentMapper {
      * @return 评论详情
      */
     Comment getCommentById(int id);
+
+    /**
+     * 查询符合的记录条数
+     *
+     * @param shopId 商铺id
+     * @param userId 用户id
+     * @return 记录条数
+     */
+    int getRecord(int shopId, Integer userId);
 }

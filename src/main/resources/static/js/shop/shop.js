@@ -72,7 +72,7 @@ const testFunction = function (shopId, shopStatus) {
             className: "color-success",
             onClick: function () {
                 //do something
-                console.log('删除');
+                console.log('商品管理');
                 window.location.href = baseRequestUrl + "/managerProduct?shopId=" + shopId;
             }
         }, {
@@ -80,8 +80,16 @@ const testFunction = function (shopId, shopStatus) {
             className: "color-success",
             onClick: function () {
                 //do something
-                console.log('删除');
+                console.log('类别管理');
                 window.location.href = baseRequestUrl + "/listShopProductCategory?shopId=" + shopId;
+            }
+        },{
+            text: "订单管理",
+            className: "color-success",
+            onClick: function () {
+                //do something
+                console.log('订单管理');
+                window.location.href =  "/order/listShopOrder?shopId=" + shopId;
             }
         }]
     });

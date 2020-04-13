@@ -11,7 +11,7 @@
     </insert>
 
     <!-- 更新店铺信息 -->
-    <update id="updateShop" parameterType="shop">
+    <update id="updateShop" parameterType="cn.fanchencloud.campus.entity.Shop">
         update shop
         <set>
             <if test="shopName != null ">shop_name = #{shopName},</if>

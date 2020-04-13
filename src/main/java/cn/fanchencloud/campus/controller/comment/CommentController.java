@@ -67,13 +67,13 @@ public class CommentController {
                                          @RequestParam("detail") String detail) {
         logger.debug("shopId = " + shopId);
         logger.debug("detail = " + detail);
+        LocalAccount user = (LocalAccount) request.getSession().getAttribute("user");
         // 校验是否具有资格进行评论
-        boolean flag = true;
+        boolean flag = commentService.checkCompetence(shopId,user.getUserId());
         if (flag) {
             Comment comment = new Comment();
             comment.setShopId(shopId);
             comment.setDetail(detail);
-            LocalAccount user = (LocalAccount) request.getSession().getAttribute("user");
             comment.setUserId(user.getUserId());
             if (commentService.submitReviewData(comment)) {
                 logger.debug("返回的记录id = " + comment.getId());

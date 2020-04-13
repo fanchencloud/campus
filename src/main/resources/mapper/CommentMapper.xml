@@ -17,4 +17,10 @@
         from comment
         where id = #{id};
     </select>
+    <select id="getRecord" resultType="java.lang.Integer">
+        select count(*)
+        from comment
+        where user_id = #{userId}
+          and shop_id = #{shopId};
+    </select>
 </mapper>

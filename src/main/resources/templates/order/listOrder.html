@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>订单列表</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!-- head 中 -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/weui/1.1.3/style/weui.min.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/jquery-weui/1.2.1/css/jquery-weui.min.css">
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/common.css">
+</head>
+<body>
+<header class="demos-header">
+    <h1 class="demos-title">订单列表</h1>
+</header>
+<div class="weui-form-preview" th:each="order:${orderFormList}">
+    <div class="weui-form-preview__hd">
+        <label class="weui-form-preview__label">付款金额</label>
+        <em class="weui-form-preview__value" th:text="'¥'+${order.price}"></em>
+    </div>
+    <div class="weui-form-preview__hd">
+        <label class="weui-form-preview__label">订单状态</label>
+        <!--        <td th:switch="${shop.enableStatus}" th:id="'shopStatus_' + ${shop.shopId} ">-->
+        <!--            <span th:case="0">审核中</span>-->
+        <!--            <span th:case="1">审核通过</span>-->
+        <!--            <span th:case="-1">审核未通过</span>-->
+        <!--        </td>-->
+        <em class="weui-form-preview__value" th:switch="${order.orderStatus}"
+            th:id="'orderStatus_' + ${order.orderId} ">
+            <!--  0-提交订单未处理 ， 1-商家已接单， 2-商家拒接订单          -->
+            <span th:case="0">等待商家处理</span>
+            <span th:case="1">商家已接单</span>
+            <span th:case="2">商家拒接订单</span>
+        </em>
+    </div>
+    <div class="weui-form-preview__bd">
+        <div class="weui-form-preview__item">
+            <label class="weui-form-preview__label">商品</label>
+            <span class="weui-form-preview__value" th:text="${order.productName}"></span>
+        </div>
+        <div class="weui-form-preview__item">
+            <label class="weui-form-preview__label">订单用户</label>
+            <span class="weui-form-preview__value" th:text="${order.orderUsername}"></span>
+        </div>
+        <div class="weui-form-preview__item">
+            <label class="weui-form-preview__label">联系方式</label>
+            <span class="weui-form-preview__value" th:text="${order.orderPhone}"></span>
+        </div>
+        <div class="weui-form-preview__item">
+            <label class="weui-form-preview__label">地址</label>
+            <span class="weui-form-preview__value" th:text="${order.orderAddress}"></span>
+        </div>
+        <div class="weui-form-preview__item">
+            <label class="weui-form-preview__label">客户备注</label>
+            <span class="weui-form-preview__value" th:text="${order.orderUserRemark}"></span>
+        </div>
+
+        <div class="weui-form-preview__item">
+            <label class="weui-form-preview__label">商家回复</label>
+            <span class="weui-form-preview__value" th:text="${order.orderShopRemark}"
+                  th:id="'orderShop_' + ${order.orderId} "></span>
+        </div>
+    </div>
+    <!--    th:onclick="'OrderOperational(o' + ${order.orderId} + ')'"-->
+    <div class="weui-form-preview__ft">
+        <button class="weui-form-preview__btn weui-form-preview__btn_primary" type="button"
+                th:onclick="OrderOperational([[${order.orderId}]]);">
+            操作
+        </button>
+    </div>
+    <hr>
+</div>
+<div class="weui-footer weui-footer_fixed-bottom">
+    <a class="weui-form-preview__btn weui-form-preview__btn_primary" onclick="OrderListOperational()"
+       href="javascript:void(0)">订单操作</a>
+</div>
+</body>
+<!-- body 最后 -->
+<script src="https://cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery-weui/1.2.1/js/jquery-weui.min.js"></script>
+<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous">
+</script>
+<script type="text/javascript" src="/js/common.js"></script>
+<script type="text/javascript" src="/js/order/listOrder.js"></script>
+</html>

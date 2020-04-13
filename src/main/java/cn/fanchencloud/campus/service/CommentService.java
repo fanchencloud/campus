@@ -38,4 +38,13 @@ public interface CommentService {
      * @return 评论详情
      */
     CommentDetail getCommentById(int id);
+
+    /**
+     * 校验是否具有权限进行评论
+     *
+     * @param shopId 店铺id
+     * @param userId 用户id
+     * @return 校验结果
+     */
+    boolean checkCompetence(int shopId, Integer userId);
 }

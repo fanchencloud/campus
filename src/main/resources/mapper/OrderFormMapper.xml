@@ -9,4 +9,88 @@
             (#{orderId}, #{userId}, #{productId}, #{shopId}, #{orderUsername}, #{orderPhone}, #{orderAddress},
              #{orderUserRemark}, #{orderShopRemark}, #{orderStatus}, #{createTime}, #{lastEditTime});
     </insert>
+    <update id="modifyOrder" parameterType="cn.fanchencloud.campus.entity.OrderForm">
+        update order_form
+        <set>
+            <if test="userId != null ">user_id = #{userId},</if>
+            <if test="productId != null ">product_id = #{productId},</if>
+            <if test="shopId != null ">shop_id = #{shopId},</if>
+            <if test="orderUsername != null ">order_username = #{orderUsername},</if>
+            <if test="orderPhone != null ">order_phone = #{orderPhone},</if>
+            <if test="orderAddress != null ">order_address = #{orderAddress},</if>
+            <if test="orderUserRemark != null ">order_user_remark = #{orderUserRemark},</if>
+            <if test="orderShopRemark != null ">order_shop_remark = #{orderShopRemark},</if>
+            <if test="orderStatus != null ">order_status = #{orderStatus},</if>
+            <if test="createTime != null ">create_time = #{createTime},</if>
+            <if test="lastEditTime != null ">last_edit_time = #{lastEditTime}</if>
+        </set>
+        where order_id = #{orderId};
+    </update>
+    <select id="getOrderListByShopId" resultType="cn.fanchencloud.campus.entity.OrderForm">
+        select order_id,
+               user_id,
+               product_id,
+               shop_id,
+               order_username,
+               order_phone,
+               order_address,
+               order_user_remark,
+               order_shop_remark,
+               order_status,
+               create_time,
+               last_edit_time
+        from order_form
+        where shop_id = #{shopId};
+    </select>
+    <select id="getOrderListByShopIdCompleted" resultType="cn.fanchencloud.campus.entity.OrderForm">
+        select order_id,
+               user_id,
+               product_id,
+               shop_id,
+               order_username,
+               order_phone,
+               order_address,
+               order_user_remark,
+               order_shop_remark,
+               order_status,
+               create_time,
+               last_edit_time
+        from order_form
+        where shop_id = #{shopId}
+          and order_status != 0
+        ;
+    </select>
+    <select id="getOrderListByShopIdUnfinished" resultType="cn.fanchencloud.campus.entity.OrderForm">
+        select order_id,
+               user_id,
+               product_id,
+               shop_id,
+               order_username,
+               order_phone,
+               order_address,
+               order_user_remark,
+               order_shop_remark,
+               order_status,
+               create_time,
+               last_edit_time
+        from order_form
+        where shop_id = #{shopId}
+          and order_status = 0;
+    </select>
+    <select id="getRecordByOrderId" resultType="cn.fanchencloud.campus.entity.OrderForm">
+        select order_id,
+               user_id,
+               product_id,
+               shop_id,
+               order_username,
+               order_phone,
+               order_address,
+               order_user_remark,
+               order_shop_remark,
+               order_status,
+               create_time,
+               last_edit_time
+        from order_form
+        where order_id = #{orderId};
+    </select>
 </mapper>

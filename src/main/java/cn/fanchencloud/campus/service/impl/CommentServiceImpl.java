@@ -77,6 +77,11 @@ public class CommentServiceImpl implements CommentService {
         return commentDetail;
     }
 
+    @Override
+    public boolean checkCompetence(int shopId, Integer userId) {
+        return commentMapper.getRecord(shopId,userId) > 0;
+    }
+
     @Autowired
     public void setPersonInfoMapper(PersonInfoMapper personInfoMapper) {
         this.personInfoMapper = personInfoMapper;
