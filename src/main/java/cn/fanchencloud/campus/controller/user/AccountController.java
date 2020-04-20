@@ -237,7 +237,7 @@ public class AccountController {
      */
     @GetMapping(value = "/modifyPassword")
     public String modifyPassword() {
-        return "/user/modifyPassword";
+        return "user/modifyPassword";
     }
 
     @PostMapping(value = "/modifyPassword")

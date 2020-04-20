@@ -3,6 +3,14 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.fanchencloud.campus.mapper.AreaMapper">
+    <insert id="addRecord" parameterType="cn.fanchencloud.campus.entity.Area">
+        insert into area(area_name, area_description, priority, create_time, last_edit_time)
+            VALUE (#{areaName},
+                   #{areaDescription},
+                   #{priority},
+                   #{createTime},
+                   #{lastEditTime});
+    </insert>
     <select id="queryAllArea" resultType="cn.fanchencloud.campus.entity.Area">
         select area_id, area_name, area_description, priority, create_time, last_edit_time
         from area

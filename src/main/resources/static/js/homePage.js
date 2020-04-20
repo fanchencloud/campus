@@ -9,7 +9,7 @@ const registerHtml = '<div class="center" id="registerBox">\n' +
     '                    <div class="weui-cell">\n' +
     '                        <div class="weui-cell__hd"><label class="weui-label">账号</label></div>\n' +
     '                        <div class="weui-cell__bd weui-cell_primary">\n' +
-    '                            <input type="text" class="weui-input" id="registerName" placeholder="用户账号"/>\n' +
+    '                            <input type="text" class="weui-input" id="registerName" placeholder="请输入用户名"/>\n' +
     '                        </div>\n' +
     '                    </div>\n' +
     '                    <div class="weui-cell">\n' +
@@ -17,7 +17,7 @@ const registerHtml = '<div class="center" id="registerBox">\n' +
     '                            <label class="weui-label">密码</label>\n' +
     '                        </div>\n' +
     '                        <div class="weui-cell__bd weui-cell_primary">\n' +
-    '                            <input type="password" id="registerPassword" class="weui-input" placeholder="不少于6位"/>\n' +
+    '                            <input type="password" id="registerPassword" class="weui-input" placeholder="请输入密码"/>\n' +
     '                        </div>\n' +
     '                    </div>\n' +
     '                    <div class="weui-cell">\n' +
@@ -87,7 +87,7 @@ const loginHtml = '<div class="center" id="loginBox">\n' +
     '                    <div class="weui-cell">\n' +
     '                        <div class="weui-cell__hd"><label class="weui-label">账户</label></div>\n' +
     '                        <div class="weui-cell__bd weui-cell_primary">\n' +
-    '                            <input type="text" id="username" class="weui-input" placeholder="用户账号"/>\n' +
+    '                            <input type="text" id="username" class="weui-input" placeholder="请输入用户名"/>\n' +
     '                        </div>\n' +
     '                    </div>\n' +
     '                    <div class="weui-cell">\n' +
@@ -95,7 +95,7 @@ const loginHtml = '<div class="center" id="loginBox">\n' +
     '                            <label class="weui-label">密码</label>\n' +
     '                        </div>\n' +
     '                        <div class="weui-cell__bd weui-cell_primary">\n' +
-    '                            <input type="password" id="password" class="weui-input" placeholder="不少于6位"/>\n' +
+    '                            <input type="password" id="password" class="weui-input" placeholder="请输入密码"/>\n' +
     '                        </div>\n' +
     '                    </div>\n' +
     '                    <div class="weui-cells__tips"></div>\n' +

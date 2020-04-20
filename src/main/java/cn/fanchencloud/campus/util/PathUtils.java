@@ -27,7 +27,7 @@ public class PathUtils {
         if (os.toLowerCase().startsWith(osStart)) {
             basePath = "E:/campusShop/image/";
         } else {
-            basePath = "/home/chen/image/";
+            basePath = "/root/image/";
         }
         basePath = basePath.replace("/", File.separator);
         return basePath;

@@ -262,7 +262,7 @@ const searchShopList = function (reloadPage) {
                             '            </div>' +
                             '        </div>' +
                             '        <div class="weui-panel__ft">' +
-                            '            <div class="shopUpdateTime">' + conversionTime(shop.lastEditTime) + ' 更新</div>' +
+                            '            <div class="shopUpdateTime">' + myFormatDateTime(shop.lastEditTime) + ' 更新</div>' +
                             '            <div class="enterShop">' +
                             '                <a href="javascript:void(0);" onclick="enterShop(' + shop.shopId + ')">' +
                             '                    点击查看' +
@@ -351,6 +351,24 @@ const conversionTime = function (timestampValue) {
     const newDate = new Date();
     newDate.setTime(timestampValue);
     return newDate.toLocaleString()
+};
+
+// 数字补0操作
+const addZero = function (num) {
+    return num < 10 ? '0' + num : num;
+};
+
+const myFormatDateTime = function (date) {
+    let time = new Date(Date.parse(date));
+    time.setTime(time.setHours(time.getHours() + 8));
+
+    let Y = time.getFullYear() + '-';
+    let M = addZero(time.getMonth() + 1) + '-';
+    let D = addZero(time.getDate()) + ' ';
+    let h = addZero(time.getHours()) + ':';
+    let m = addZero(time.getMinutes()) + ':';
+    let s = addZero(time.getSeconds());
+    return Y + M + D + h + m + s;
 };
 
 /**

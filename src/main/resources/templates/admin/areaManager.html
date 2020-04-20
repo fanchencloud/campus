@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>区域管理</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <!-- head 中 -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/weui/1.1.3/style/weui.min.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/jquery-weui/1.2.1/css/jquery-weui.min.css">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link href="/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="/css/plugins/footable/footable.core.css" rel="stylesheet">
+
+    <link href="/css/animate.css" rel="stylesheet">
+    <link href="/css/style.css?v=4.1.0" rel="stylesheet">
+    <style type="text/css">
+        .addAreaDiv {
+            margin-left: 3%;
+        }
+
+        .addAreaContainerClass {
+            margin: 1% 1% 1% 1%;
+        }
+    </style>
+</head>
+
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content">
+                    <label for="filter"></label>
+                    <input type="text" class="form-control input-sm m-b-xs" id="filter" placeholder="搜索表格...">
+                    <table class="footable table table-stripped" data-page-size="10" data-filter=#filter>
+                        <thead>
+                        <tr>
+                            <th>区域名</th>
+                            <th>区域描述</th>
+                            <th>权重</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr class="gradeX" th:each="area:${areaList}">
+                            <!-- 区域名 -->
+                            <td th:text="${area.areaName}"></td>
+                            <!-- 区域描述 -->
+                            <td th:text="${area.areaDescription}"></td>
+                            <!-- 权重 -->
+                            <td th:text="${area.priority}"></td>
+                            <!--                            &lt;!&ndash; 操作 &ndash;&gt;-->
+                            <!--                            <td class="center">-->
+                            <!--                                <a href="javascript:;" class="weui-btn weui-btn_primary">按钮</a>-->
+                            <!--                            </td>-->
+                        </tr>
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                            <td colspan="9">
+                                <ul class="pagination pull-right"></ul>
+                            </td>
+                        </tr>
+                        <div style="color: red;" th:text="${errormessage}"></div>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="weui-btn-area addAreaDiv">
+    <!-- Contextual button for informational alert messages -->
+    <button type="button" class="btn btn-info" onclick="addArea()" id="addAreaButton">添加区域</button>
+</div>
+<div id="addAreaContainer" class="well addAreaContainerClass" style="display: none">
+    <div id="errorMessage" style="color: red;"></div>
+    <form action="/area/addAreaAdmin" method="post">
+        <div class="form-group">
+            <label for="addAreaName">区域名</label>
+            <input type="text" class="form-control" name="addAreaName" id="addAreaName" placeholder="区域名">
+        </div>
+        <div class="form-group">
+            <label for="addAreaDescription">区域描述</label>
+            <input type="text" class="form-control" name="addAreaDescription" id="addAreaDescription"
+                   placeholder="区域描述">
+        </div>
+        <div class="form-group">
+            <label for="addRegionalWeight">区域权重</label>
+            <input type="number" class="form-control" name="addRegionalWeight" id="addRegionalWeight"
+                   placeholder="区域权重">
+        </div>
+        <button type="submit" class="btn btn-default">提交</button>
+    </form>
+</div>
+<!-- 全局js -->
+<!--<script src="/js/jquery.min.js"></script>-->
+<!--<script src="/js/bootstrap.min.js"></script>-->
+<!-- body 最后 -->
+<script src="https://cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery-weui/1.2.1/js/jquery-weui.min.js"></script>
+<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+<script src="/js/plugins/footable/footable.all.min.js"></script>
+
+<!-- 自定义js -->
+<script src="/js/content.js?v=1.0.0"></script>
+<script>
+    $(document).ready(function () {
+        $('.footable').footable();
+        $('.footable2').footable();
+    });
+    $(document).on("open", ".weui-popup-modal", function () {
+        console.log("open popup");
+    }).on("close", ".weui-popup-modal", function () {
+        console.log("close popup");
+    });
+</script>
+</body>
+<script src="/js/admin/areaManager.js"></script>
+</html>

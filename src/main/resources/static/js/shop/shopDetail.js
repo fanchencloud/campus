@@ -66,7 +66,7 @@ $(function () {
         const obj = document.getElementById("shopImage");
         obj.setAttribute("src", "/shop/getStorePhoto?shopId=" + response.data.shopId);//把图片修改为目标路径
         const shopLastEditTime = document.getElementById("shopLastEditTime");
-        shopLastEditTime.innerText = conversionTime(response.data.lastEditTime);
+        shopLastEditTime.innerText = myFormatDateTime(response.data.lastEditTime);
         const shopDescription = document.getElementById("shopDescription");
         shopDescription.innerText = response.data.shopDescription;
         const shopAddress = document.getElementById("shopAddress");
@@ -228,7 +228,7 @@ const searchProductList = function (reloadPage) {
                             '            </div>' +
                             '        </div>' +
                             '        <div class="weui-panel__ft">' +
-                            '            <div class="shopUpdateTime">' + conversionTime(product.lastEditTime) + ' 更新</div>' +
+                            '            <div class="shopUpdateTime">' + myFormatDateTime(product.lastEditTime) + ' 更新</div>' +
                             '            <div class="enterShop">' +
                             '                <a href="javascript:void(0);" onclick="enterProduct(' + product.productId + ')">' +
                             '                    点击查看' +
@@ -318,6 +318,28 @@ const conversionTime = function (timestampValue) {
     const newDate = new Date();
     newDate.setTime(timestampValue);
     return newDate.toLocaleString()
+};
+
+// 数字补0操作
+const addZero = function (num) {
+    return num < 10 ? '0' + num : num;
+};
+
+const myFormatDateTime = function (date) {
+    let time = new Date(Date.parse(date));
+    time.setTime(time.setHours(time.getHours() + 8));
+
+    // alert(time);
+    // if (!isNaN(time)) {
+    //     return new Date(Date.parse(date.replace(/-/g, "/")));
+    // } else {
+    let Y = time.getFullYear() + '-';
+    let M = addZero(time.getMonth() + 1) + '-';
+    let D = addZero(time.getDate()) + ' ';
+    let h = addZero(time.getHours()) + ':';
+    let m = addZero(time.getMinutes()) + ':';
+    let s = addZero(time.getSeconds());
+    return Y + M + D + h + m + s;
 };
 
 // 下拉继续加载数据

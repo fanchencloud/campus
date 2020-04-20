@@ -30,4 +30,6 @@ public interface AreaMapper {
      * @return 区域列表
      */
     List<Area> getRegisterAreaList();
+
+    int addRecord(Area a);
 }

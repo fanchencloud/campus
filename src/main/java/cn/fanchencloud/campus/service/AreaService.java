@@ -27,4 +27,6 @@ public interface AreaService {
      * @return 用于注册店铺使用的区域信息
      */
     List<Area> getRegisterAreaList();
+
+    boolean addRecord(Area a);
 }

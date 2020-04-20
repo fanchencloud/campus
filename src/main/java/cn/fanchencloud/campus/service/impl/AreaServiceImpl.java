@@ -40,6 +40,11 @@ public class AreaServiceImpl implements AreaService {
         return areaMapper.getRegisterAreaList();
     }
 
+    @Override
+    public boolean addRecord(Area a) {
+        return areaMapper.addRecord(a) > 0;
+    }
+
     @Autowired
     public void setAreaMapper(AreaMapper areaMapper) {
         this.areaMapper = areaMapper;
