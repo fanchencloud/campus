@@ -15,7 +15,7 @@
     <description>Demo project for Spring Boot</description>
 
     <properties>
-        <java.version>11</java.version>
+        <java.version>15</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <pagehelper.version>5.1.2</pagehelper.version>
         <commons-logging.version>1.2</commons-logging.version>

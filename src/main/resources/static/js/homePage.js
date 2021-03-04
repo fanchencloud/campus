@@ -135,19 +135,18 @@ const userInfoHtml = '<header class="demos-header">\n' +
     '        <div class="weui-cell__bd">\n' +
     '            <p>性别</p>\n' +
     '        </div>\n' +
-    '        <div class="weui-cell__ft" id="userInfoGender">18720878478</div>\n' +
+    '        <div class="weui-cell__ft" id="userInfoGender"></div>\n' +
     '    </div>\n' +
     '    <div class="weui-cell">\n' +
     '        <div class="weui-cell__bd">\n' +
     '            <p>联系方式</p>\n' +
     '        </div>\n' +
-    '        <div class="weui-cell__ft" id="userInfoPhone">18720878478</div>\n' +
+    '        <div class="weui-cell__ft" id="userInfoPhone"></div>\n' +
     '    </div>\n' +
     '    <div class="weui-cell">\n' +
     '        <div class="weui-cell__bd">\n' +
     '            <p>邮箱</p>\n' +
     '        </div>\n' +
-    '        <div class="weui-cell__ft" id="userInfoEmail">18720878478</div>\n' +
     '    </div>\n' +
     '</div>\n' +
     '<div class="weui-cells">\n' +
